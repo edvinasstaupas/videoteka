@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -25,5 +27,7 @@ public class Episode {
     private Integer season;
 
     private Integer episodeInSeason;
+
+    private Date releaseDate;
 
 }

@@ -5,28 +5,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Series {
+public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "series")
-    private List<Episode> episodes;
+    private String firstName;
+
+    private String lastName;
 
     @ManyToMany
-    private Set<Genre> genres;
-
-    private String title;
-
-    private String description;
+    private List<Movie> movies;
 
     @ManyToMany
-    private List<Actor> actors;
-
+    private List<Series> series;
 }

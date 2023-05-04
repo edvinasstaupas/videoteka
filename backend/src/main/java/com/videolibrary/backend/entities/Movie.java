@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,5 +27,10 @@ public class Movie {
     private String title;
 
     private String description;
+
+    private Date releaseDate;
+    
+    @ManyToMany
+    private List<Actor> actors;
 
 }
