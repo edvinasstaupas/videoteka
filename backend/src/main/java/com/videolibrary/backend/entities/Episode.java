@@ -20,6 +20,8 @@ public class Episode {
     @JoinColumn(name = "series_id")
     private Series series;
 
+    private String name;
+
     private Integer season;
 
     private Integer episodeInSeason;
