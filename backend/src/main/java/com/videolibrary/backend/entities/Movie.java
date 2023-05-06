@@ -16,9 +16,13 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToMany
+    @JoinTable(
+            name = "movie_genre",
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
     private Set<Genre> genres;
 
     @OneToOne
@@ -29,8 +33,5 @@ public class Movie {
     private String description;
 
     private Date releaseDate;
-    
-    @ManyToMany
-    private List<Actor> actors;
 
 }

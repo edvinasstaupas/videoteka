@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -11,20 +13,17 @@ public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne
     private User user;
 
     @ManyToOne
-    private Video video;
-
-    private Long playedTo;
-
-    @ManyToOne
     private Movie movie;
 
     @ManyToOne
-    private Series series;
+    private Episode episode;
+
+    private ZonedDateTime timestamp;
 
 }

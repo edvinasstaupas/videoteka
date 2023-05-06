@@ -14,19 +14,20 @@ public class Series {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @OneToMany(mappedBy = "series")
-    private List<Episode> episodes;
+    private List<Season> seasons;
 
     @ManyToMany
+    @JoinTable(
+            name = "series_genre",
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
     private Set<Genre> genres;
 
     private String title;
 
     private String description;
-
-    @ManyToMany
-    private List<Actor> actors;
 
 }
