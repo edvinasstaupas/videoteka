@@ -16,10 +16,17 @@ import java.util.List;
 public class VideoController {
     private final VideoService videoService;
 
-    @GetMapping("/videos")
-    public List<VideoPreview> getVideos(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+    @GetMapping("/movie-videos")
+    public List<VideoPreview> getVideosForMovies(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "releaseDate") String sortBy) {
-        PageRequest request = PageRequest.of(page, size, Sort.by(sortBy));
-        return videoService.getVideos(request);
+        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+        return videoService.getVideosForMovies(request);
+    }
+
+    @GetMapping("/episode-videos")
+    public List<VideoPreview> getVideosForEpisodes(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "releaseDate") String sortBy) {
+        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+        return videoService.getVideosForEpisodes(request);
     }
 }

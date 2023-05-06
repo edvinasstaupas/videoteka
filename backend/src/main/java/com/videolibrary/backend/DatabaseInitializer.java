@@ -44,11 +44,8 @@ public class DatabaseInitializer {
         movie.setTitle("movieTitle");
         movie.setReleaseDate(LocalDate.parse("2023-05-06"));
         movie.setDescription("movieDescription");
-
         movie.setVideo(getMovieVideo());
-
-        Genre movieGenre = getMovieGenre();
-        movie.setGenres(Set.of(movieGenre));
+        movie.setGenres(Set.of(getMovieGenre()));
         return movie;
     }
 

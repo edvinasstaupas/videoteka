@@ -7,5 +7,4 @@ public class VideoPreview {
     private Integer id;
     private String title;
     private String thumbnailUrl;
-    private VideoType type;
 }
