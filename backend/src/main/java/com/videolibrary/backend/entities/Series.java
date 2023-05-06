@@ -14,7 +14,7 @@ public class Series {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToMany(mappedBy = "series")
     private List<Season> seasons;

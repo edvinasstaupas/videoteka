@@ -13,7 +13,7 @@ public class Episode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToOne
     private Video video;
