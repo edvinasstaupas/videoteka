@@ -19,14 +19,13 @@ public class Episode {
     private Video video;
 
     @ManyToOne
-    @JoinColumn(name = "series_id")
-    private Series series;
+    private Season season;
 
     private String name;
 
-    private Integer season;
+    private String description;
 
-    private Integer episodeInSeason;
+    private Integer numberInSeason;
 
     private Date releaseDate;
 

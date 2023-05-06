@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,6 +17,10 @@ public class Movie {
     private Integer id;
 
     @ManyToMany
+    @JoinTable(
+            name = "movie_genre",
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
     private Set<Genre> genres;
 
     @OneToOne
@@ -29,8 +31,5 @@ public class Movie {
     private String description;
 
     private Date releaseDate;
-    
-    @ManyToMany
-    private List<Actor> actors;
 
 }
