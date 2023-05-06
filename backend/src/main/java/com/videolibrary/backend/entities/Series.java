@@ -16,10 +16,10 @@ public class Series {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "series")
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
     private List<Season> seasons;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "series_genre",
             inverseJoinColumns = @JoinColumn(name = "genre_id")
@@ -30,4 +30,8 @@ public class Series {
 
     private String description;
 
+    public void setSeasons(List<Season> seasons) {
+        seasons.forEach(season -> season.setSeries(this));
+        this.seasons = seasons;
+    }
 }

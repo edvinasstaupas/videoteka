@@ -22,7 +22,11 @@ public class Season {
     @ManyToOne
     private Series series;
 
-    @OneToMany(mappedBy = "season")
+    @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     private List<Episode> episodes;
 
+    public void setEpisodes(List<Episode> episodes) {
+        episodes.forEach(episode -> episode.setSeason(this));
+        this.episodes = episodes;
+    }
 }

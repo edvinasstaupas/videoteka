@@ -1,10 +1,16 @@
 package com.videolibrary.backend.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -15,7 +21,7 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Video video;
 
     @ManyToOne
@@ -27,6 +33,6 @@ public class Episode {
 
     private Integer numberInSeason;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
 }
