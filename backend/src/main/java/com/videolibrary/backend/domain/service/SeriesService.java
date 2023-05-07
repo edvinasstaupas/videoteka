@@ -14,6 +14,6 @@ public class SeriesService {
     private final SeriesRepository seriesRepository;
 
     public Page<Series> getSeriesOrderedByEpisodeReleaseDate(PageRequest request) {
-        return seriesRepository.asd(request);
+        return seriesRepository.getSeriesByEpisodeReleaseDate(request);
     }
 }
