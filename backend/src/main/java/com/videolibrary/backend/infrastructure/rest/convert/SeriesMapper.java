@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(config = DefaultMapperConfig.class)
 public interface SeriesMapper {
 
-    @Mapping(target = "episode.season", ignore = true)
     SeriesDto map(Series series);
 
 }
