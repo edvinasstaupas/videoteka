@@ -1,4 +1,4 @@
-package com.videolibrary.backend.infrastructure.repository;
+package com.videolibrary.backend.infrastructure.sql.repository;
 
 import com.videolibrary.backend.domain.entity.Series;
 import org.springframework.data.domain.Page;

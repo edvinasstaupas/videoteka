@@ -1,4 +1,4 @@
-package com.videolibrary.backend;
+package com.videolibrary.backend.infrastructure.sql.initializer;
 
 import com.videolibrary.backend.domain.entity.Episode;
 import com.videolibrary.backend.domain.entity.Genre;
@@ -6,8 +6,8 @@ import com.videolibrary.backend.domain.entity.Movie;
 import com.videolibrary.backend.domain.entity.Season;
 import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.domain.entity.Video;
-import com.videolibrary.backend.infrastructure.repository.MovieRepository;
-import com.videolibrary.backend.infrastructure.repository.SeriesRepository;
+import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
+import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,7 +20,7 @@ import java.util.Set;
 @ConditionalOnProperty(value = "videolibrary.database.init", havingValue = "true")
 @Component
 @RequiredArgsConstructor
-public class DatabaseInitializer {
+public class DataInitializer {
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
 

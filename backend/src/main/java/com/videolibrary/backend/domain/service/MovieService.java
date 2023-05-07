@@ -1,7 +1,7 @@
 package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Movie;
-import com.videolibrary.backend.infrastructure.repository.MovieRepository;
+import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
