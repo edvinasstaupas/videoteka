@@ -9,7 +9,6 @@ public class EpisodeDto {
 
     private Integer id;
     private VideoDto video;
-    private SeasonDto season;
     private String name;
     private String description;
     private Integer numberInSeason;

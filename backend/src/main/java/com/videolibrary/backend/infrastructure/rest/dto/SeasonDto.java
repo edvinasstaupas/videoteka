@@ -13,7 +13,6 @@ public class SeasonDto {
     private Integer id;
     private String title;
     private String description;
-    private Series series;
     private List<EpisodeDto> episodes;
 
 }

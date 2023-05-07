@@ -24,10 +24,9 @@ public class SeriesController {
     @GetMapping
     public List<SeriesDto> getSeries(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "releaseDate") String sortBy) {
-        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
-        return seriesService.getSeries(request).map(seriesMapper::map).toList();
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest request = PageRequest.of(page, size);
+        return seriesService.getSeriesOrderedByEpisodeReleaseDate(request).map(seriesMapper::map).toList();
     }
 
 }

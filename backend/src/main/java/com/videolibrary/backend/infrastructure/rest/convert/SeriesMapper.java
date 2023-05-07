@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(config = DefaultMapperConfig.class)
-public interface SeriesMapper extends IMapper<Series, SeriesDto> {
+public interface SeriesMapper {
+
+    @Mapping(target = "episode.season", ignore = true)
+    SeriesDto map(Series series);
 
 }
