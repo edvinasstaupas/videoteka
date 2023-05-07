@@ -1,9 +1,10 @@
-package com.videolibrary.backend.entities;
+package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,10 @@ public class Series {
     private String title;
 
     private String description;
+
+    private String thumbnailUrl;
+
+    private LocalDate releaseDate;
 
     public void setSeasons(List<Season> seasons) {
         seasons.forEach(season -> season.setSeries(this));
