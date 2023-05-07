@@ -11,15 +11,7 @@ import java.util.List;
 
 public interface SeriesRepository extends PagingAndSortingRepository<Series, Integer>, JpaRepository<Series, Integer> {
 
-//        @Query(value = "SELECT DISTINCT s.* FROM series s " +
-//            "JOIN season se " +
-//            "JOIN episode e " +
-//            "ORDER BY e.release_date DESC "+
-//            "LIMIT ",
-//            countQuery = "SELECT COUNT(DISTINCT s.id) FROM series s " +
-//                    "JOIN season se " +
-//                    "JOIN episode e", nativeQuery = true)
     @Query("SELECT DISTINCT s FROM Series s JOIN s.seasons se JOIN se.episodes e ORDER BY e.releaseDate ASC")
-    Page<Series> asd(Pageable pageable);
+    Page<Series> getSeriesByEpisodeReleaseDate(Pageable pageable);
 
 }
