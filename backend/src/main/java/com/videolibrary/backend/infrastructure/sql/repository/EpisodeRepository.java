@@ -1,6 +1,6 @@
-package com.videolibrary.backend.repository;
+package com.videolibrary.backend.infrastructure.sql.repository;
 
-import com.videolibrary.backend.entities.Episode;
+import com.videolibrary.backend.domain.entity.Episode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

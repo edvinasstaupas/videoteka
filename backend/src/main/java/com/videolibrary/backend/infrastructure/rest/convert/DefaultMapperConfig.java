@@ -1,4 +1,4 @@
-package com.videolibrary.backend.convert;
+package com.videolibrary.backend.infrastructure.rest.convert;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.MapperConfig;

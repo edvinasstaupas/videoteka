@@ -1,4 +1,4 @@
-package com.videolibrary.backend.entities;
+package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
