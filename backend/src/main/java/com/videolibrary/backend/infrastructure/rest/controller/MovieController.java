@@ -4,6 +4,7 @@ import com.videolibrary.backend.domain.service.MovieService;
 import com.videolibrary.backend.infrastructure.rest.convert.MovieMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.MovieDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +24,12 @@ public class MovieController {
     private final MovieMapper movieMapper;
 
     @GetMapping
-    public List<MovieDto> getMovies(
+    public Page<MovieDto> getMovies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "releaseDate") String sortBy) {
         PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
-        return moviesService.getMovies(request).map(movieMapper::map).toList();
+        return moviesService.getMovies(request).map(movieMapper::map);
     }
 
 }
