@@ -16,8 +16,8 @@ public class Video {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String thumbnailUrl;
+    private String thumbnailPathId;
 
-    private String url;
+    private String pathId;
 
 }

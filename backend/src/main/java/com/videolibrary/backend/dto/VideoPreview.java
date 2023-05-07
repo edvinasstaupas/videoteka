@@ -6,5 +6,5 @@ import lombok.Data;
 public class VideoPreview {
     private Integer id;
     private String title;
-    private String thumbnailUrl;
+    private String thumbnailPathId;
 }

@@ -81,15 +81,15 @@ public class DatabaseInitializer {
 
     private Video getEpisodeVideo() {
         Video episodeVideo = new Video();
-        episodeVideo.setThumbnailUrl("episodeVideoThumbnailUrl");
-        episodeVideo.setUrl("episodeVideoUrl");
+        episodeVideo.setThumbnailPathId("episodeVideoThumbnailPathId");
+        episodeVideo.setPathId("episodeVideoPathId");
         return episodeVideo;
     }
 
     private Video getMovieVideo() {
         Video movieVideo = new Video();
-        movieVideo.setUrl("movieVideourl");
-        movieVideo.setThumbnailUrl("movieVideoThumbnailUrl");
+        movieVideo.setPathId("2760d44c-da56-4c3b-84f5-3844049aa062");
+        movieVideo.setThumbnailPathId("e1e5f5ec-c168-4f26-ab43-95d087704d22");
         return movieVideo;
     }
 }
