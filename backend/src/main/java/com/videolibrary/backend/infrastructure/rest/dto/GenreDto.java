@@ -1,6 +1,6 @@
 package com.videolibrary.backend.infrastructure.rest.dto;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class GenreDto {

@@ -1,11 +1,9 @@
 package com.videolibrary.backend.infrastructure.rest.dto;
 
 
-import com.videolibrary.backend.domain.entity.Genre;
-import com.videolibrary.backend.domain.entity.Season;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -18,5 +16,6 @@ public class SeriesDto {
     private String title;
     private String description;
     private String thumbnailUrl;
+    private LocalDate lastEpisodeReleaseDate;
 
 }

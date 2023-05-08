@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RequestMapping("movie")
 @RestController
@@ -29,7 +29,7 @@ public class MovieController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) List<Integer> genreIds) {
+            @RequestParam(required = false) Set<Integer> genreIds) {
         var searchDto = new SearchDto(title, genreIds);
         PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "releaseDate"));
         return moviesService.getMovies(request, searchDto).map(movieMapper::map);

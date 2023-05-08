@@ -14,10 +14,12 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
+    private final GenreService genreService;
+
     public Page<Movie> getMovies(PageRequest request, SearchDto searchDto) {
-        if (searchDto.getGenreIds() == null)
-            return movieRepository.findAllByTitleLike(request, searchDto.getTitle());
-        else
-            return movieRepository.findAllByTitleLikeAndGenresIn(request, searchDto.getTitle(), searchDto.getGenreIds());
+        var genres = searchDto.getGenreIds();
+        if (genres == null)
+            genres = genreService.findAllIds();
+        return movieRepository.findAllByTitleContainingAndGenresIn(request, searchDto.getTitle(), genres);
     }
 }

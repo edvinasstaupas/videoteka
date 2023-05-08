@@ -1,11 +1,6 @@
 package com.videolibrary.backend.infrastructure.sql.initializer;
 
-import com.videolibrary.backend.domain.entity.Episode;
-import com.videolibrary.backend.domain.entity.Genre;
-import com.videolibrary.backend.domain.entity.Movie;
-import com.videolibrary.backend.domain.entity.Season;
-import com.videolibrary.backend.domain.entity.Series;
-import com.videolibrary.backend.domain.entity.Video;
+import com.videolibrary.backend.domain.entity.*;
 import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import jakarta.annotation.PostConstruct;
@@ -24,6 +19,12 @@ public class DataInitializer {
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
 
+    private static Genre getMovieGenre() {
+        Genre movieGenre = new Genre();
+        movieGenre.setName("movieGenre");
+        return movieGenre;
+    }
+
     @PostConstruct
     public void initDatabase() {
         movieRepository.save(getMovie());
@@ -36,6 +37,7 @@ public class DataInitializer {
         series.setTitle("seriesTitle");
         series.setSeasons(List.of(getSeason()));
         series.setGenres(Set.of(getSeriesGenre()));
+        series.setLastEpisodeReleaseDate(LocalDate.parse("2023-05-07"));
         return series;
     }
 
@@ -71,12 +73,6 @@ public class DataInitializer {
         Genre seriesGenre = new Genre();
         seriesGenre.setName("seriesGenre");
         return seriesGenre;
-    }
-
-    private static Genre getMovieGenre() {
-        Genre movieGenre = new Genre();
-        movieGenre.setName("movieGenre");
-        return movieGenre;
     }
 
     private Video getEpisodeVideo() {

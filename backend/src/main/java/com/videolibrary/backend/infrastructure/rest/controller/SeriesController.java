@@ -1,4 +1,5 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
+
 import com.videolibrary.backend.domain.dto.SearchDto;
 import com.videolibrary.backend.domain.service.SeriesService;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RequestMapping("series")
 @RestController
@@ -28,9 +29,9 @@ public class SeriesController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) List<Integer> genreIds) {
+            @RequestParam(required = false) Set<Integer> genreIds) {
         var searchDto = new SearchDto(title, genreIds);
-        PageRequest request = PageRequest.of(page, size);
+        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "lastEpisodeReleaseDate"));
         return seriesService.getSeriesOrderedByEpisodeReleaseDate(request, searchDto).map(seriesMapper::map);
     }
 

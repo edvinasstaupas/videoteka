@@ -1,9 +1,6 @@
 package com.videolibrary.backend.infrastructure.rest.dto;
 
-import com.videolibrary.backend.domain.entity.Episode;
-import com.videolibrary.backend.domain.entity.Series;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.util.List;
 

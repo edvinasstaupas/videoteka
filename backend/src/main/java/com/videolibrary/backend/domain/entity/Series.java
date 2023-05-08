@@ -33,6 +33,8 @@ public class Series {
 
     private String thumbnailUrl;
 
+    private LocalDate lastEpisodeReleaseDate;
+
     public void setSeasons(List<Season> seasons) {
         seasons.forEach(season -> season.setSeries(this));
         this.seasons = seasons;

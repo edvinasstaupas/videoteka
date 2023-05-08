@@ -1,24 +1,21 @@
 package com.videolibrary.backend.domain.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
 public class SearchDto {
 
     private String title;
-    private List<Integer> genreIds;
+    private Set<Integer> genreIds;
 
-    public SearchDto(String title, List<Integer> genreIds) {
+    public SearchDto(String title, Set<Integer> genreIds) {
         if (title == null)
             title = "";
-        this.title = "%" + title.toLowerCase() + "%";
+        this.title = title;
         this.genreIds = genreIds;
     }
 }

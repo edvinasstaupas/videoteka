@@ -1,6 +1,6 @@
 package com.videolibrary.backend.infrastructure.rest.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.Set;
