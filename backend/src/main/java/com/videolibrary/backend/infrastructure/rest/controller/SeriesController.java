@@ -1,4 +1,5 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
+import com.videolibrary.backend.domain.dto.SearchDto;
 import com.videolibrary.backend.domain.service.SeriesService;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.SeriesDto;
@@ -25,9 +26,12 @@ public class SeriesController {
     @GetMapping
     public Page<SeriesDto> getSeries(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) List<Integer> genreIds) {
+        var searchDto = new SearchDto(title, genreIds);
         PageRequest request = PageRequest.of(page, size);
-        return seriesService.getSeriesOrderedByEpisodeReleaseDate(request).map(seriesMapper::map);
+        return seriesService.getSeriesOrderedByEpisodeReleaseDate(request, searchDto).map(seriesMapper::map);
     }
 
 }

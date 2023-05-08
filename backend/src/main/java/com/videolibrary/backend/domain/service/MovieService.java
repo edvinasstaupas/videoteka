@@ -1,5 +1,6 @@
 package com.videolibrary.backend.domain.service;
 
+import com.videolibrary.backend.domain.dto.SearchDto;
 import com.videolibrary.backend.domain.entity.Movie;
 import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,10 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    public Page<Movie> getMovies(PageRequest request) {
-        return movieRepository.findAll(request);
+    public Page<Movie> getMovies(PageRequest request, SearchDto searchDto) {
+        if (searchDto.getGenreIds() == null)
+            return movieRepository.findAllByTitleLike(request, searchDto.getTitle());
+        else
+            return movieRepository.findAllByTitleLikeAndGenresIn(request, searchDto.getTitle(), searchDto.getGenreIds());
     }
 }

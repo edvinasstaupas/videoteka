@@ -1,5 +1,6 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
 
+import com.videolibrary.backend.domain.dto.SearchDto;
 import com.videolibrary.backend.domain.service.MovieService;
 import com.videolibrary.backend.infrastructure.rest.convert.MovieMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.MovieDto;
@@ -27,9 +28,12 @@ public class MovieController {
     public Page<MovieDto> getMovies(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) List<Integer> genreIds,
             @RequestParam(defaultValue = "releaseDate") String sortBy) {
+        var searchDto = new SearchDto(title, genreIds);
         PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
-        return moviesService.getMovies(request).map(movieMapper::map);
+        return moviesService.getMovies(request, searchDto).map(movieMapper::map);
     }
 
 }
