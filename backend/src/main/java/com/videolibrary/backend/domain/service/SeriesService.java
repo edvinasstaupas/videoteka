@@ -16,7 +16,7 @@ public class SeriesService {
 
     private final GenreService genreService;
 
-    public Page<Series> getSeriesOrderedByEpisodeReleaseDate(PageRequest request, SearchDto searchDto) {
+    public Page<Series> getSeries(PageRequest request, SearchDto searchDto) {
         var genres = searchDto.getGenreIds();
         if (genres == null)
             genres = genreService.findAllIds();

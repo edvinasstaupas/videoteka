@@ -32,7 +32,7 @@ public class SeriesController {
             @RequestParam(required = false) Set<Integer> genreIds) {
         var searchDto = new SearchDto(title, genreIds);
         PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "lastEpisodeReleaseDate"));
-        return seriesService.getSeriesOrderedByEpisodeReleaseDate(request, searchDto).map(seriesMapper::map);
+        return seriesService.getSeries(request, searchDto).map(seriesMapper::map);
     }
 
 }
