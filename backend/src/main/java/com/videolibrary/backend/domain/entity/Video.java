@@ -1,4 +1,4 @@
-package com.videolibrary.backend.entities;
+package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +10,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Genre {
+public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private String thumbnailUrl;
+
+    private String url;
 
 }

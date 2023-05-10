@@ -1,10 +1,10 @@
-package com.videolibrary.backend.entities;
+package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -15,7 +15,7 @@ public class Episode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Video video;
 
     @ManyToOne
@@ -27,6 +27,6 @@ public class Episode {
 
     private Integer numberInSeason;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
 }

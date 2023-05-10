@@ -1,33 +1,35 @@
-package com.videolibrary.backend.entities;
+package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Series {
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "series")
-    private List<Season> seasons;
-
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "series_genre",
+            name = "movie_genre",
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Video video;
+
     private String title;
 
     private String description;
+
+    private LocalDate releaseDate;
 
 }
