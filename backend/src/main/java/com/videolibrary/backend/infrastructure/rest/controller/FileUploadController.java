@@ -1,7 +1,6 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
 
-import com.videolibrary.backend.infrastructure.rest.dto.FileType;
-import com.videolibrary.backend.domain.service.FileStorageService;
+import com.videolibrary.backend.infrastructure.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("files")
 @RequiredArgsConstructor
@@ -23,15 +20,15 @@ public class FileUploadController {
     private final FileStorageService storageService;
 
     @GetMapping("{filename}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename, @RequestParam("type") FileType type) {
-        Resource file = storageService.loadAsResource(filename, type);
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        Resource file = storageService.loadAsResource(filename);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
 
     @PostMapping
-    public UUID upload(@RequestParam("file") MultipartFile file, @RequestParam("type") FileType type) {
-        return storageService.store(file, type);
+    public String upload(@RequestParam("file") MultipartFile file) {
+        return storageService.store(file).toString();
     }
 }

@@ -1,6 +1,5 @@
-package com.videolibrary.backend.domain.service;
+package com.videolibrary.backend.infrastructure.service;
 
-import com.videolibrary.backend.infrastructure.rest.dto.FileType;
 import com.videolibrary.backend.property.StorageProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -18,9 +17,9 @@ import java.util.UUID;
 public class FileStorageService {
     private final StorageProperties properties;
 
-    public UUID store(MultipartFile file, FileType type) {
+    public UUID store(MultipartFile file) {
         UUID fileId = UUID.randomUUID();
-        Path destinationPath = properties.getStoragePath(type).resolve(fileId.toString());
+        Path destinationPath = properties.getRootStoragePath().resolve(fileId.toString());
         try {
             Files.createDirectories(destinationPath.getParent());
             file.transferTo(destinationPath);
@@ -30,8 +29,8 @@ public class FileStorageService {
         }
     }
 
-    public Resource loadAsResource(String filename, FileType type) {
-        Path resourcePath = properties.getStoragePath(type).resolve(filename);
+    public Resource loadAsResource(String filename) {
+        Path resourcePath = properties.getRootStoragePath().resolve(filename);
         return UrlResource.from(resourcePath.toUri());
     }
 }
