@@ -18,6 +18,7 @@ services:
   backend:
     image: psk/backend:1.0
     environment:
+      storage.rootStoragePath: /var/lib/uploads
       videolibrary.database.host: db
       server.port: 8080
     depends_on:
@@ -25,5 +26,8 @@ services:
         condition: service_healthy
     ports:
       - "8081:8080"
+    volumes:
+      - file_data:/var/lib/uploads
 volumes:
   db_data:
+  file_data:

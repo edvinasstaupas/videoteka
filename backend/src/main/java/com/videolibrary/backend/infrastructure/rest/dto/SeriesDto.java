@@ -15,7 +15,7 @@ public class SeriesDto {
     private Set<GenreDto> genres;
     private String title;
     private String description;
-    private String thumbnailUrl;
+    private String thumbnailPathId;
     private LocalDate lastEpisodeReleaseDate;
 
 }

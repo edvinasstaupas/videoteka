@@ -6,7 +6,7 @@ import lombok.Data;
 public class VideoDto {
 
     private Integer id;
-    private String thumbnailUrl;
-    private String url;
+    private String thumbnailPathId;
+    private String pathId;
 
 }
