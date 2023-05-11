@@ -1,13 +1,15 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
 
-import com.videolibrary.backend.domain.dto.SearchDto;
+import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.domain.service.SeriesService;
+import com.videolibrary.backend.domain.service.SpecificationBuilder;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.SeriesDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,9 +32,9 @@ public class SeriesController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Set<Integer> genreIds) {
-        var searchDto = new SearchDto(title, genreIds);
         PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "lastEpisodeReleaseDate"));
-        return seriesService.getSeries(request, searchDto).map(seriesMapper::map);
+        Specification<Series> specification = SpecificationBuilder.searchSpecification(title, genreIds);
+        return seriesService.getSeries(request, specification).map(seriesMapper::map);
     }
 
 }
