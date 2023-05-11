@@ -1,4 +1,4 @@
-package com.videolibrary.backend.dto;
+package com.videolibrary.backend.infrastructure.rest.dto;
 
 public enum FileType {
     THUMBNAIL,

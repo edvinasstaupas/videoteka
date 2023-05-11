@@ -1,6 +1,6 @@
 package com.videolibrary.backend.property;
 
-import com.videolibrary.backend.dto.FileType;
+import com.videolibrary.backend.infrastructure.rest.dto.FileType;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -31,7 +31,7 @@ public class Series {
 
     private String description;
 
-    private String thumbnailUrl;
+    private String thumbnailPathId;
 
     private LocalDate lastEpisodeReleaseDate;
 
