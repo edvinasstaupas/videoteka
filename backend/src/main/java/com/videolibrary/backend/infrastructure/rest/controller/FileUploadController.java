@@ -1,7 +1,7 @@
-package com.videolibrary.backend.controller;
+package com.videolibrary.backend.infrastructure.rest.controller;
 
 import com.videolibrary.backend.infrastructure.rest.dto.FileType;
-import com.videolibrary.backend.service.FileStorageService;
+import com.videolibrary.backend.domain.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

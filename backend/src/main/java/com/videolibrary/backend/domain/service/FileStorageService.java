@@ -1,4 +1,4 @@
-package com.videolibrary.backend.service;
+package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.infrastructure.rest.dto.FileType;
 import com.videolibrary.backend.property.StorageProperties;
