@@ -1,0 +1,30 @@
+videolibrary:
+  database:
+    password: password
+    name: videolibrary
+    user: root
+    driver: org.mariadb.jdbc.Driver
+    host: localhost
+    port: 3306
+    # Uncomment to initialize database with example data
+    # init: true
+storage:
+  rootStoragePath: uploads
+spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  datasource:
+    password: ${videolibrary.database.password}
+    driver-class-name: ${videolibrary.database.driver}
+    username: ${videolibrary.database.user}
+    url: jdbc:mariadb://${videolibrary.database.host}:${videolibrary.database.port}/${videolibrary.database.name}?allowMultiQueries=true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  servlet:
+    context-path: /api
+  port: 8080

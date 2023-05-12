@@ -20,7 +20,7 @@ import java.util.Set;
 @RequestMapping("movies")
 @RestController
 @RequiredArgsConstructor
-public class MovieController {
+public class MoviesController {
 
     private final MovieService moviesService;
 
