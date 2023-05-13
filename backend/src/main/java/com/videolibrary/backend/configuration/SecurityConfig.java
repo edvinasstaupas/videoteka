@@ -33,6 +33,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             try {
                 authorize
+                        .requestMatchers("/user").hasAuthority("SCOPE_user")
                         .requestMatchers("/movies/**", "/series/**").hasAuthority("SCOPE_user")
                         .requestMatchers(HttpMethod.GET, "/files/**").hasAuthority("SCOPE_user")
                         .requestMatchers(HttpMethod.POST, "/files").hasAuthority("SCOPE_admin")
