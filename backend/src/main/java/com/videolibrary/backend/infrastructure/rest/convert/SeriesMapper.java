@@ -5,6 +5,7 @@ import com.videolibrary.backend.infrastructure.rest.dto.CreateSeriesDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeriesDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(config = DefaultMapperConfig.class, uses = VideoMapper.class)
 public interface SeriesMapper {
@@ -16,4 +17,6 @@ public interface SeriesMapper {
     @Mapping(target = "seasons", ignore = true)
     @Mapping(target = "genres", ignore = true)
     Series map(CreateSeriesDto series);
+
+    void update(Series source, @MappingTarget Series destination);
 }

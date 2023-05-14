@@ -2,6 +2,7 @@ package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Genre;
 import com.videolibrary.backend.domain.entity.Series;
+import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
 import com.videolibrary.backend.infrastructure.sql.repository.GenreRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final GenreRepository genreRepository;
+    private final SeriesMapper seriesMapper;
 
     public Page<Series> getSeries(PageRequest request, Specification<Series> specification) {
         return seriesRepository.findAll(specification, request);
@@ -36,5 +38,11 @@ public class SeriesService {
 
     public void deleteSeries(Integer id) {
         seriesRepository.deleteById(id);
+    }
+
+    public Series updateSeries(Integer id, Series series) {
+        Series existingSeries = seriesRepository.getReferenceById(id);
+        seriesMapper.update(series, existingSeries);
+        return seriesRepository.save(existingSeries);
     }
 }
