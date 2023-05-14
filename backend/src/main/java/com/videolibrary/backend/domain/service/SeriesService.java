@@ -2,8 +2,6 @@ package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Genre;
 import com.videolibrary.backend.domain.entity.Series;
-import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
-import com.videolibrary.backend.infrastructure.rest.dto.CreateSeriesDto;
 import com.videolibrary.backend.infrastructure.sql.repository.GenreRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,7 +19,6 @@ import java.util.List;
 public class SeriesService {
 
     private final SeriesRepository seriesRepository;
-    private final SeriesMapper seriesMapper;
     private final GenreRepository genreRepository;
 
     public Page<Series> getSeries(PageRequest request, Specification<Series> specification) {
@@ -32,9 +29,8 @@ public class SeriesService {
         return seriesRepository.findById(seriesId).orElseThrow(EntityNotFoundException::new);
     }
 
-    public Series createSeries(CreateSeriesDto dto) {
-        Series series = seriesMapper.map(dto);
-        List<Genre> genres = genreRepository.findAllById(dto.getGenreIds());
+    public Series createSeries(Series series, List<Integer> genreIds) {
+        List<Genre> genres = genreRepository.findAllById(genreIds);
         series.setGenres(new HashSet<>(genres));
         return seriesRepository.save(series);
     }

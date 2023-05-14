@@ -2,8 +2,6 @@ package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Genre;
 import com.videolibrary.backend.domain.entity.Movie;
-import com.videolibrary.backend.infrastructure.rest.convert.MovieMapper;
-import com.videolibrary.backend.infrastructure.rest.dto.CreateMovieDto;
 import com.videolibrary.backend.infrastructure.sql.repository.GenreRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +19,13 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
-    private final MovieMapper movieMapper;
 
     public Page<Movie> getMovies(PageRequest request, Specification<Movie> specification) {
         return movieRepository.findAll(specification, request);
     }
 
-    public Movie createMovie(CreateMovieDto dto) {
-        Movie movie = movieMapper.map(dto);
-        List<Genre> genres = genreRepository.findAllById(dto.getGenreIds());
+    public Movie createMovie(Movie movie, List<Integer> genreIds) {
+        List<Genre> genres = genreRepository.findAllById(genreIds);
         movie.setGenres(new HashSet<>(genres));
         return movieRepository.save(movie);
     }

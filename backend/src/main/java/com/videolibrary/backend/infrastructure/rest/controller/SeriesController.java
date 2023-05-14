@@ -57,14 +57,16 @@ public class SeriesController {
 
     @PostMapping
     public SeriesDto createSeries(@RequestBody CreateSeriesDto dto) {
-        Series entity = seriesService.createSeries(dto);
+        Series series = seriesMapper.map(dto);
+        Series entity = seriesService.createSeries(series, dto.getGenreIds());
         return seriesMapper.map(entity);
     }
 
     @PostMapping("/{seriesId}/seasons")
     public SeasonDto createSeason(@PathVariable Integer seriesId, @RequestBody CreateSeasonDto dto) {
-        Season season = seasonService.createSeason(seriesId, dto);
-        return seasonMapper.map(season);
+        Season season = seasonMapper.map(dto);
+        Season entity = seasonService.createSeason(seriesId, season);
+        return seasonMapper.map(entity);
     }
 
     @PostMapping("/{seriesId}/seasons/{seasonId}/episodes")

@@ -42,7 +42,8 @@ public class MoviesController {
 
     @PostMapping
     public MovieDto createMovie(@RequestBody CreateMovieDto dto) {
-        Movie entity = moviesService.createMovie(dto);
+        Movie movie = movieMapper.map(dto);
+        Movie entity = moviesService.createMovie(movie, dto.getGenreIds());
         return movieMapper.map(entity);
     }
 
