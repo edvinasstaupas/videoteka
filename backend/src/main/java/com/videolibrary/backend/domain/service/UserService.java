@@ -18,24 +18,22 @@ public class UserService {
 
     public User createUser(CreateUpdateUserDto dto) {
         User user = userMapper.map(dto);
-        user.setId(authService.GetCurrentUserId());
-        userRepository.save(user);
-        return user;
+        user.setId(authService.getCurrentUserId());
+        return userRepository.save(user);
     }
 
     public User getUser() {
-        String userId = authService.GetCurrentUserId();
+        String userId = authService.getCurrentUserId();
         return userRepository.findById(userId).orElse(null);
     }
 
     public User updateUser(CreateUpdateUserDto dto) {
-        String userId = authService.GetCurrentUserId();
+        String userId = authService.getCurrentUserId();
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return null;
         }
         user.setUsername(dto.getUsername());
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 }
