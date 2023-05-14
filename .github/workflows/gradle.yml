@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   build:
@@ -21,8 +19,12 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
 
       - name: Build with Gradle
-        working-directory: backend  # Set the working directory to '/backend'
-        run: ./gradlew build
+        working-directory: backend
+        run: |
+          wget https://services.gradle.org/distributions/gradle-7.0-bin.zip
+          unzip -q gradle-7.0-bin.zip
+          export PATH=$PWD/gradle-7.0/bin:$PATH
+          ./gradlew build
