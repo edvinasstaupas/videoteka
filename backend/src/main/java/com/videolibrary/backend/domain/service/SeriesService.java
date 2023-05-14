@@ -18,4 +18,8 @@ public class SeriesService {
     public Page<Series> getSeries(PageRequest request, Specification<Series> specification) {
         return seriesRepository.findAll(specification, request);
     }
+
+    public Series createSeries(Series series) {
+        return seriesRepository.save(series);
+    }
 }
