@@ -25,7 +25,11 @@ replay_pid*
 
 backend/.gradle/
 backend/gradle/
+backend/bin/
 backend/build/
+
 **/.idea/
+**/.vscode/
+
 gradlew
 gradlew.bat
