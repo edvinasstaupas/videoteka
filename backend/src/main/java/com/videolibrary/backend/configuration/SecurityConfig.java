@@ -1,9 +1,10 @@
 package com.videolibrary.backend.configuration;
 
+import com.videolibrary.backend.infrastructure.sql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Value("${auth0.audience}")
@@ -33,13 +35,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> {
             try {
                 authorize
-                        .requestMatchers("/user").hasAuthority("SCOPE_user")
-                        .requestMatchers("/movies/**", "/series/**").hasAuthority("SCOPE_user")
-                        .requestMatchers(HttpMethod.GET, "/files/**").hasAuthority("SCOPE_user")
-                        .requestMatchers(HttpMethod.POST, "/files").hasAuthority("SCOPE_admin")
                         .requestMatchers("/messages/public").permitAll()
-                        .requestMatchers("/messages/user").hasAuthority("SCOPE_user")
-                        .requestMatchers("/messages/admin").hasAuthority("SCOPE_admin")
+                        .anyRequest().authenticated()
                         .and().cors()
                         .and().oauth2ResourceServer().jwt();
             } catch (Exception e) {

@@ -3,6 +3,7 @@ package com.videolibrary.backend.infrastructure.rest.controller;
 import com.videolibrary.backend.domain.service.MessageService;
 import com.videolibrary.backend.infrastructure.rest.dto.Message;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ class MessagesController {
     }
 
     @GetMapping(value = "/admin")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public Message privateScopedEndpoint() {
         messageService.printAuthName();
         return new Message("All good. You can see this because you are Authenticated with admin role");
