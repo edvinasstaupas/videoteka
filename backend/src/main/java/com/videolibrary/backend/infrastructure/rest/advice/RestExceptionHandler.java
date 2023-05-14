@@ -1,8 +1,9 @@
 package com.videolibrary.backend.infrastructure.rest.advice;
 
-import com.videolibrary.backend.domain.exception.EntityNotFoundException;
+import com.videolibrary.backend.domain.exception.DomainEntityNotFoundException;
 import com.videolibrary.backend.infrastructure.rest.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @ControllerAdvice
@@ -47,13 +45,12 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleInvalidObjects(Exception exception) {
         var ex = (MethodArgumentNotValidException) exception;
-        List<String> errors = new ArrayList<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> {
+        var message = String.join("\n", ex.getBindingResult().getAllErrors().stream().map(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.add(fieldName + ": " + errorMessage);
-        });
-        return toResponse(exception, HttpStatus.BAD_REQUEST, String.join("\n", errors));
+            return fieldName + ": " + errorMessage;
+        }).toList());
+        return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
 
     // 400 bad request
@@ -61,25 +58,19 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(Exception exception) {
         var ex = (ConstraintViolationException) exception;
-        List<String> errors = new ArrayList<>();
-        ex.getConstraintViolations().forEach(error -> {
-            String errorMessage = error.getMessageTemplate();
-            errors.add(errorMessage);
-        });
-        return toResponse(exception, HttpStatus.BAD_REQUEST, String.join("\n", errors));
+        var message = String.join("\n", ex.getConstraintViolations().stream().map(ConstraintViolation::getMessageTemplate).toList());
+        return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
 
     // 400 bad request
-    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class,
-            HttpRequestMethodNotSupportedException.class, MissingServletRequestParameterException.class,
-            MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class, HttpRequestMethodNotSupportedException.class, MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleBadRequest(Exception e) {
         return toResponse(e, HttpStatus.BAD_REQUEST);
     }
 
     // 404 not found
-    @ExceptionHandler({NoHandlerFoundException.class, EntityNotFoundException.class})
+    @ExceptionHandler({NoHandlerFoundException.class, DomainEntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFound(Exception e) {
         return toResponse(e, HttpStatus.NOT_FOUND);
