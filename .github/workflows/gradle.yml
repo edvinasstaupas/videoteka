@@ -31,8 +31,8 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
 
-    - name: Set execute permissions for Gradle wrapper
-      run: chmod +x ./backend/gradlew
+    # - name: Set execute permissions for Gradle wrapper
+    #   run: chmod +x ./backend/gradlew
     
     - name: Execute Gradle build
-      run: ./backend/gradlew -p ./backend build
+      run: gradle -p ./backend build
