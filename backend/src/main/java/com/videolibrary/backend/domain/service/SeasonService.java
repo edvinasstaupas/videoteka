@@ -21,4 +21,8 @@ public class SeasonService {
    public Season findBySeriesIdAndId(Integer seriesId, Integer seasonId) {
         return seasonRepository.findBySeriesIdAndId(seriesId, seasonId);
    }
+
+    public void deleteSeason(Integer id) {
+        seasonRepository.deleteById(id);
+    }
 }

@@ -33,4 +33,8 @@ public class SeriesService {
         series.setGenres(new HashSet<>(genres));
         return seriesRepository.save(series);
     }
+
+    public void deleteSeries(Integer id) {
+        seriesRepository.deleteById(id);
+    }
 }

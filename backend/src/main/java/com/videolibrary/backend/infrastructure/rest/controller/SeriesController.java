@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,6 +74,11 @@ public class SeriesController {
         Episode episode = episodeMapper.map(dto);
         Episode entity = episodeService.createEpisode(seriesId, seasonId, episode);
         return episodeMapper.map(entity);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteSeries(@PathVariable Integer id) {
+        seriesService.deleteSeries(id);
     }
 
 }

@@ -29,4 +29,8 @@ public class MovieService {
         movie.setGenres(new HashSet<>(genres));
         return movieRepository.save(movie);
     }
+
+    public void deleteMovie(Integer id) {
+        movieRepository.deleteById(id);
+    }
 }

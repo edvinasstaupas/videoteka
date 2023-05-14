@@ -24,6 +24,10 @@ public class EpisodeService {
         return episodeRepository.save(episode);
     }
 
+    public void deleteEpisode(Integer id) {
+        episodeRepository.deleteById(id);
+    }
+
     private LocalDate getLastEpisodeReleaseDate(Episode episode, Series series) {
         return ObjectUtils.max(series.getLastEpisodeReleaseDate(), episode.getReleaseDate());
     }
