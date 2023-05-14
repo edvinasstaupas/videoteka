@@ -10,7 +10,14 @@ videolibrary:
     # init: true
 storage:
   rootStoragePath: uploads
+auth0:
+  audience: https://videoteka.komandospavadinimas.lt
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-r9sh2y9g.us.auth0.com/
   servlet:
     multipart:
       max-file-size: -1
