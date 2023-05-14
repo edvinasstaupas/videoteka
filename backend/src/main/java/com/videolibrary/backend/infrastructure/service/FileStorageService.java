@@ -25,7 +25,7 @@ public class FileStorageService {
             file.transferTo(destinationPath);
             return fileId;
         } catch (IOException e) {
-            throw new IllegalArgumentException("Failed to store file " + file.getOriginalFilename() + ". To " + destinationPath, e);
+            throw new RuntimeException("Failed to store file " + file.getOriginalFilename() + ". To " + destinationPath, e);
         }
     }
 
