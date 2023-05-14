@@ -21,7 +21,7 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Build with Gradle
+      - name: Build project
         run: |
           cd backend
           ./gradlew build
