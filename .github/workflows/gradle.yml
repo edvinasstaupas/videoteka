@@ -35,4 +35,4 @@ jobs:
       run: chmod +x ./backend/gradlew
     
     - name: Execute Gradle build
-      run: ./backend/gradlew build
+      run: ./backend/gradlew -f ./backend build
