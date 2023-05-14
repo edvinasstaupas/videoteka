@@ -22,9 +22,6 @@ jobs:
           java-version: '17'
 
       - name: Build with Gradle
-        working-directory: backend
         run: |
-          wget https://services.gradle.org/distributions/gradle-7.0-bin.zip
-          unzip -q gradle-7.0-bin.zip
-          export PATH=$PWD/gradle-7.0/bin:$PATH
+          cd backend
           ./gradlew build
