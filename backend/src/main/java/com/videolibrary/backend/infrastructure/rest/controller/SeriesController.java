@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Set;
 
 @RequestMapping("series")
@@ -70,10 +69,10 @@ public class SeriesController {
     }
 
     @PostMapping("/{seriesId}/seasons/{seasonId}/episodes")
-    public List<EpisodeDto> createEpisodes(@PathVariable Integer seriesId, @PathVariable Integer seasonId, @RequestBody List<CreateEpisodeDto> dto) {
-        List<Episode> episodes = episodeMapper.mapToEntities(dto);
-        List<Episode> entities = episodeService.createEpisodes(seriesId, seasonId, episodes);
-        return episodeMapper.mapToDtos(entities);
+    public EpisodeDto createEpisode(@PathVariable Integer seriesId, @PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
+        Episode episode = episodeMapper.map(dto);
+        Episode entity = episodeService.createEpisode(seriesId, seasonId, episode);
+        return episodeMapper.map(entity);
     }
 
 }
