@@ -17,4 +17,8 @@ public class MovieService {
     public Page<Movie> getMovies(PageRequest request, Specification<Movie> specification) {
         return movieRepository.findAll(specification, request);
     }
+
+    public Movie createMovie(Movie movie) {
+        return movieRepository.save(movie);
+    }
 }
