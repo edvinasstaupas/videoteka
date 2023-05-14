@@ -5,6 +5,7 @@ import com.videolibrary.backend.infrastructure.rest.dto.CreateGenreDto;
 import com.videolibrary.backend.infrastructure.rest.dto.GenreDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(config = DefaultMapperConfig.class)
 public interface GenreMapper {
@@ -13,4 +14,6 @@ public interface GenreMapper {
 
     @Mapping(target = "id", ignore = true)
     Genre map(CreateGenreDto dto);
+
+    void update(Genre source, @MappingTarget Genre target);
 }
