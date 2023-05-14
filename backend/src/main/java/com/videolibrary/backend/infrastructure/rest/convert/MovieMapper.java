@@ -12,6 +12,7 @@ public interface MovieMapper {
     MovieDto map(Movie entity);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "genres", ignore = true)
     Movie map(CreateMovieDto dto);
 
 }

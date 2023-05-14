@@ -3,12 +3,12 @@ package com.videolibrary.backend.infrastructure.rest.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class CreateMovieDto {
 
-    private Set<CreateGenreDto> genres;
+    private List<Integer> genreIds = List.of();
     private CreateVideoDto video;
     private String title;
     private String description;
