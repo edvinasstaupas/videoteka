@@ -33,4 +33,13 @@ public class FileStorageService {
         Path resourcePath = properties.getRootStoragePath().resolve(filename);
         return UrlResource.from(resourcePath.toUri());
     }
+
+    public void delete(String filename) {
+        Path resourcePath = properties.getRootStoragePath().resolve(filename);
+        try {
+            Files.deleteIfExists(resourcePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to delete file " + filename, e);
+        }
+    }
 }
