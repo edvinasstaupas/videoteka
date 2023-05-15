@@ -36,6 +36,7 @@ public class FileUploadController {
     }
 
     @DeleteMapping("{filename}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public void delete(@PathVariable String filename) {
         storageService.delete(filename);
     }

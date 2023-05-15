@@ -2,6 +2,7 @@ package com.videolibrary.backend.infrastructure.rest.advice;
 
 import com.videolibrary.backend.domain.exception.DomainEntityNotFoundException;
 import com.videolibrary.backend.infrastructure.rest.dto.ErrorResponse;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -70,7 +71,7 @@ public class RestExceptionHandler {
     }
 
     // 404 not found
-    @ExceptionHandler({NoHandlerFoundException.class, DomainEntityNotFoundException.class})
+    @ExceptionHandler({NoHandlerFoundException.class, DomainEntityNotFoundException.class, EntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFound(Exception e) {
         return toResponse(e, HttpStatus.NOT_FOUND);
