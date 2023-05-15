@@ -1,19 +1,14 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
 
-import com.videolibrary.backend.domain.entity.Episode;
 import com.videolibrary.backend.domain.entity.Season;
 import com.videolibrary.backend.domain.entity.Series;
-import com.videolibrary.backend.domain.service.EpisodeService;
 import com.videolibrary.backend.domain.service.SeasonService;
 import com.videolibrary.backend.domain.service.SeriesService;
 import com.videolibrary.backend.domain.service.SpecificationBuilder;
-import com.videolibrary.backend.infrastructure.rest.convert.EpisodeMapper;
 import com.videolibrary.backend.infrastructure.rest.convert.SeasonMapper;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
-import com.videolibrary.backend.infrastructure.rest.dto.CreateEpisodeDto;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeasonDto;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeriesDto;
-import com.videolibrary.backend.infrastructure.rest.dto.EpisodeDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeasonDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeriesDto;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +35,8 @@ public class SeriesController {
 
     private final SeriesService seriesService;
     private final SeasonService seasonService;
-    private final EpisodeService episodeService;
     private final SeriesMapper seriesMapper;
     private final SeasonMapper seasonMapper;
-    private final EpisodeMapper episodeMapper;
 
     @GetMapping
     public Page<SeriesDto> getSeries(
@@ -68,13 +61,6 @@ public class SeriesController {
         Season season = seasonMapper.map(dto);
         Season entity = seasonService.createSeason(seriesId, season);
         return seasonMapper.map(entity);
-    }
-
-    @PostMapping("/{seriesId}/seasons/{seasonId}/episodes")
-    public EpisodeDto createEpisode(@PathVariable Integer seriesId, @PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
-        Episode episode = episodeMapper.map(dto);
-        Episode entity = episodeService.createEpisode(seasonId, episode);
-        return episodeMapper.map(entity);
     }
 
     @DeleteMapping("{id}")
