@@ -5,6 +5,7 @@ import com.videolibrary.backend.domain.entity.Season;
 import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.infrastructure.rest.convert.EpisodeMapper;
 import com.videolibrary.backend.infrastructure.sql.repository.EpisodeRepository;
+import com.videolibrary.backend.infrastructure.sql.repository.SeasonRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,12 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class EpisodeService {
-    private final SeasonService seasonService;
+    private final SeasonRepository seasonRepository;
     private final EpisodeRepository episodeRepository;
     private final EpisodeMapper episodeMapper;
 
-    public Episode createEpisode(Integer seriesId, Integer seasonId, Episode episode) {
-        Season season = seasonService.findBySeriesIdAndId(seriesId, seasonId);
+    public Episode createEpisode(Integer seasonId, Episode episode) {
+        Season season = seasonRepository.findByIdOrThrow(seasonId);
         Series series = season.getSeries();
         series.setLastEpisodeReleaseDate(getLastEpisodeReleaseDate(episode, series));
         updateEpisode(episode, season);
@@ -32,7 +33,7 @@ public class EpisodeService {
     }
 
     public Episode updateEpisode(Integer id, Episode episode) {
-        Episode existingEpisode = episodeRepository.getReferenceById(id);
+        Episode existingEpisode = episodeRepository.findByIdOrThrow(id);
         boolean changedReleaseDate = !Objects.equals(episode.getReleaseDate(), existingEpisode.getReleaseDate());
 
         episodeMapper.update(episode, existingEpisode);

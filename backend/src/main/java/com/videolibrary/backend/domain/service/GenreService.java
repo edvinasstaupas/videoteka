@@ -27,7 +27,7 @@ public class GenreService {
     }
 
     public Genre updateGenre(Integer id, Genre genre) {
-        Genre existingGenre = genreRepository.getReferenceById(id);
+        Genre existingGenre = genreRepository.findByIdOrThrow(id);
         genreMapper.update(genre, existingGenre);
         return genreRepository.save(existingGenre);
     }

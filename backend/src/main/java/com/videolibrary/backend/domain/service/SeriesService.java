@@ -26,10 +26,6 @@ public class SeriesService {
         return seriesRepository.findAll(specification, request);
     }
 
-    public Series getSeries(Integer seriesId) {
-        return seriesRepository.getReferenceById(seriesId);
-    }
-
     public Series createSeries(Series series, List<Integer> genreIds) {
         List<Genre> genres = genreRepository.findAllById(genreIds);
         series.setGenres(new HashSet<>(genres));
@@ -41,7 +37,7 @@ public class SeriesService {
     }
 
     public Series updateSeries(Integer id, Series series) {
-        Series existingSeries = seriesRepository.getReferenceById(id);
+        Series existingSeries = seriesRepository.findByIdOrThrow(id);
         seriesMapper.update(series, existingSeries);
         return seriesRepository.save(existingSeries);
     }

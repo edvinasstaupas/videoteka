@@ -73,7 +73,7 @@ public class SeriesController {
     @PostMapping("/{seriesId}/seasons/{seasonId}/episodes")
     public EpisodeDto createEpisode(@PathVariable Integer seriesId, @PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
         Episode episode = episodeMapper.map(dto);
-        Episode entity = episodeService.createEpisode(seriesId, seasonId, episode);
+        Episode entity = episodeService.createEpisode(seasonId, episode);
         return episodeMapper.map(entity);
     }
 

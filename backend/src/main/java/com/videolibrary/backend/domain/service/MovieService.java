@@ -37,7 +37,7 @@ public class MovieService {
     }
 
     public Movie updateMovie(Integer id, Movie movie) {
-        Movie existingMovie = movieRepository.getReferenceById(id);
+        Movie existingMovie = movieRepository.findByIdOrThrow(id);
         movieMapper.update(movie, existingMovie);
         return movieRepository.save(existingMovie);
     }
