@@ -1,19 +1,14 @@
 package com.videolibrary.backend.infrastructure.rest.controller;
 
-import com.videolibrary.backend.domain.entity.Episode;
 import com.videolibrary.backend.domain.entity.Season;
 import com.videolibrary.backend.domain.entity.Series;
-import com.videolibrary.backend.domain.service.EpisodeService;
 import com.videolibrary.backend.domain.service.SeasonService;
 import com.videolibrary.backend.domain.service.SeriesService;
 import com.videolibrary.backend.domain.service.SpecificationBuilder;
-import com.videolibrary.backend.infrastructure.rest.convert.EpisodeMapper;
 import com.videolibrary.backend.infrastructure.rest.convert.SeasonMapper;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
-import com.videolibrary.backend.infrastructure.rest.dto.CreateEpisodeDto;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeasonDto;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeriesDto;
-import com.videolibrary.backend.infrastructure.rest.dto.EpisodeDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeasonDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeriesDto;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,10 +35,8 @@ public class SeriesController {
 
     private final SeriesService seriesService;
     private final SeasonService seasonService;
-    private final EpisodeService episodeService;
     private final SeriesMapper seriesMapper;
     private final SeasonMapper seasonMapper;
-    private final EpisodeMapper episodeMapper;
 
     @GetMapping
     public Page<SeriesDto> getSeries(
@@ -68,11 +63,15 @@ public class SeriesController {
         return seasonMapper.map(entity);
     }
 
-    @PostMapping("/{seriesId}/seasons/{seasonId}/episodes")
-    public EpisodeDto createEpisode(@PathVariable Integer seriesId, @PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
-        Episode episode = episodeMapper.map(dto);
-        Episode entity = episodeService.createEpisode(seriesId, seasonId, episode);
-        return episodeMapper.map(entity);
+    @DeleteMapping("{id}")
+    public void deleteSeries(@PathVariable Integer id) {
+        seriesService.deleteSeries(id);
     }
 
+    @PatchMapping("{id}")
+    public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto) {
+        Series series = seriesMapper.map(dto);
+        Series entity = seriesService.updateSeries(id, series);
+        return seriesMapper.map(entity);
+    }
 }

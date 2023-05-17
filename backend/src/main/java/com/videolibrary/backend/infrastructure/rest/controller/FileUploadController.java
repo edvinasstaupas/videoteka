@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,5 +33,11 @@ public class FileUploadController {
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public String upload(@RequestParam("file") MultipartFile file) {
         return storageService.store(file).toString();
+    }
+
+    @DeleteMapping("{filename}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
+    public void delete(@PathVariable String filename) {
+        storageService.delete(filename);
     }
 }

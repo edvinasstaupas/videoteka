@@ -11,8 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,4 +50,15 @@ public class MoviesController {
         return movieMapper.map(entity);
     }
 
+    @DeleteMapping("{id}")
+    public void deleteMovie(@PathVariable Integer id) {
+        moviesService.deleteMovie(id);
+    }
+
+    @PutMapping("{id}")
+    public MovieDto updateMovie(@PathVariable Integer id, @RequestBody CreateMovieDto dto) {
+        Movie movie = movieMapper.map(dto);
+        Movie entity = moviesService.updateMovie(id, movie);
+        return movieMapper.map(entity);
+    }
 }

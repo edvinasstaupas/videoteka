@@ -2,6 +2,7 @@ package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Genre;
 import com.videolibrary.backend.domain.entity.Movie;
+import com.videolibrary.backend.infrastructure.rest.convert.MovieMapper;
 import com.videolibrary.backend.infrastructure.sql.repository.GenreRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
+    private final MovieMapper movieMapper;
 
     public Page<Movie> getMovies(PageRequest request, Specification<Movie> specification) {
         return movieRepository.findAll(specification, request);
@@ -28,5 +30,15 @@ public class MovieService {
         List<Genre> genres = genreRepository.findAllById(genreIds);
         movie.setGenres(new HashSet<>(genres));
         return movieRepository.save(movie);
+    }
+
+    public void deleteMovie(Integer id) {
+        movieRepository.deleteById(id);
+    }
+
+    public Movie updateMovie(Integer id, Movie movie) {
+        Movie existingMovie = movieRepository.findByIdOrThrow(id);
+        movieMapper.update(movie, existingMovie);
+        return movieRepository.save(existingMovie);
     }
 }
