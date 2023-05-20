@@ -2,6 +2,7 @@ package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Genre;
 import com.videolibrary.backend.infrastructure.rest.convert.GenreMapper;
+import com.videolibrary.backend.infrastructure.rest.dto.CreateGenreDto;
 import com.videolibrary.backend.infrastructure.sql.repository.GenreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,8 @@ public class GenreService {
         return genreRepository.findAll(request);
     }
 
-    public Genre createGenre(Genre genre) {
+    public Genre createGenre(CreateGenreDto dto) {
+        Genre genre = genreMapper.map(dto);
         return genreRepository.save(genre);
     }
 
@@ -26,7 +28,8 @@ public class GenreService {
         genreRepository.deleteById(id);
     }
 
-    public Genre updateGenre(Integer id, Genre genre) {
+    public Genre updateGenre(Integer id, CreateGenreDto dto) {
+        Genre genre = genreMapper.map(dto);
         Genre existingGenre = genreRepository.findByIdOrThrow(id);
         genreMapper.update(genre, existingGenre);
         return genreRepository.save(existingGenre);

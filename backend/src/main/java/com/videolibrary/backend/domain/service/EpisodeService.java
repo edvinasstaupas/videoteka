@@ -1,17 +1,12 @@
 package com.videolibrary.backend.domain.service;
 
 import com.videolibrary.backend.domain.entity.Episode;
-import com.videolibrary.backend.domain.entity.Season;
-import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.infrastructure.rest.convert.EpisodeMapper;
+import com.videolibrary.backend.infrastructure.rest.dto.CreateEpisodeDto;
 import com.videolibrary.backend.infrastructure.sql.repository.EpisodeRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeasonRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +14,12 @@ public class EpisodeService {
     private final SeasonRepository seasonRepository;
     private final EpisodeRepository episodeRepository;
     private final EpisodeMapper episodeMapper;
+    private final VideoService videoService;
 
-    public Episode createEpisode(Integer seasonId, Episode episode) {
-        Season season = seasonRepository.findByIdOrThrow(seasonId);
-        Series series = season.getSeries();
-        series.setLastEpisodeReleaseDate(getLastEpisodeReleaseDate(episode, series));
-        updateEpisode(episode, season);
+    public Episode createEpisode(Integer seasonId, CreateEpisodeDto dto) {
+        Episode episode = episodeMapper.map(dto);
+        episode.setSeason(seasonRepository.findByIdOrThrow(seasonId));
+        episode.setVideo(videoService.createVideo(dto.getVideo()));
         return episodeRepository.save(episode);
     }
 
@@ -32,24 +27,11 @@ public class EpisodeService {
         episodeRepository.deleteById(id);
     }
 
-    public Episode updateEpisode(Integer id, Episode episode) {
+    public Episode updateEpisode(Integer id, CreateEpisodeDto dto) {
         Episode existingEpisode = episodeRepository.findByIdOrThrow(id);
-        boolean changedReleaseDate = !Objects.equals(episode.getReleaseDate(), existingEpisode.getReleaseDate());
-
+        Episode episode = episodeMapper.map(dto);
         episodeMapper.update(episode, existingEpisode);
-        if (changedReleaseDate) {
-            Series series = existingEpisode.getSeason().getSeries();
-            series.setLastEpisodeReleaseDate(getLastEpisodeReleaseDate(existingEpisode, series));
-        }
         return episodeRepository.save(existingEpisode);
     }
 
-    private LocalDate getLastEpisodeReleaseDate(Episode episode, Series series) {
-        return ObjectUtils.max(series.getLastEpisodeReleaseDate(), episode.getReleaseDate());
-    }
-
-    private void updateEpisode(Episode episode, Season season) {
-        episode.setSeason(season);
-        episode.setNumberInSeason(season.getEpisodes().size() + 1);
-    }
 }

@@ -2,9 +2,11 @@ package com.videolibrary.backend.infrastructure.rest.dto;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class CreateVideoDto {
 
-    private String thumbnailPathId;
-    private String pathId;
+    private UUID thumbnailId;
+    private UUID contentId;
 }

@@ -36,8 +36,7 @@ public class GenresController {
 
     @PostMapping
     public GenreDto createGenre(@RequestBody CreateGenreDto dto) {
-        Genre genre = genreMapper.map(dto);
-        Genre entity = genreService.createGenre(genre);
+        Genre entity = genreService.createGenre(dto);
         return genreMapper.map(entity);
     }
 
@@ -48,8 +47,7 @@ public class GenresController {
 
     @PatchMapping("{id}")
     public GenreDto updateGenre(@PathVariable Integer id, @RequestBody CreateGenreDto dto) {
-        Genre genre = genreMapper.map(dto);
-        Genre entity = genreService.updateGenre(id, genre);
+        Genre entity = genreService.updateGenre(id, dto);
         return genreMapper.map(entity);
     }
 }

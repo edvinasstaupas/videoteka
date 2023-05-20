@@ -44,34 +44,31 @@ public class SeriesController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) Set<Integer> genreIds) {
-        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "lastEpisodeReleaseDate"));
+        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "seasons.episodes.releaseDate"));
         Specification<Series> specification = SpecificationBuilder.searchSpecification(title, genreIds);
         return seriesService.getSeries(request, specification).map(seriesMapper::map);
     }
 
     @PostMapping
     public SeriesDto createSeries(@RequestBody CreateSeriesDto dto) {
-        Series series = seriesMapper.map(dto);
-        Series entity = seriesService.createSeries(series, dto.getGenreIds());
+        Series entity = seriesService.createSeries(dto);
+        return seriesMapper.map(entity);
+    }
+
+    @PatchMapping("{id}")
+    public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto) {
+        Series entity = seriesService.updateSeries(id, dto);
         return seriesMapper.map(entity);
     }
 
     @PostMapping("/{seriesId}/seasons")
     public SeasonDto createSeason(@PathVariable Integer seriesId, @RequestBody CreateSeasonDto dto) {
-        Season season = seasonMapper.map(dto);
-        Season entity = seasonService.createSeason(seriesId, season);
+        Season entity = seasonService.createSeason(seriesId, dto);
         return seasonMapper.map(entity);
     }
 
     @DeleteMapping("{id}")
     public void deleteSeries(@PathVariable Integer id) {
         seriesService.deleteSeries(id);
-    }
-
-    @PatchMapping("{id}")
-    public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto) {
-        Series series = seriesMapper.map(dto);
-        Series entity = seriesService.updateSeries(id, series);
-        return seriesMapper.map(entity);
     }
 }

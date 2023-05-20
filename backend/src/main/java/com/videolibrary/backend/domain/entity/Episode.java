@@ -25,8 +25,6 @@ public class Episode {
 
     private String description;
 
-    private Integer numberInSeason;
-
     private LocalDate releaseDate;
 
 }

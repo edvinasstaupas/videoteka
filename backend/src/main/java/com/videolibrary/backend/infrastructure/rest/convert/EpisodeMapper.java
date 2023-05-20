@@ -12,7 +12,7 @@ public interface EpisodeMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "season", ignore = true)
-    @Mapping(target = "numberInSeason", ignore = true)
+    @Mapping(target = "video", ignore = true)
     Episode map(CreateEpisodeDto episode);
 
     EpisodeDto map(Episode episode);
