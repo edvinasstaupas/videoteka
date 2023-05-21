@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class GenreService {
@@ -22,6 +25,10 @@ public class GenreService {
     public Genre createGenre(CreateGenreDto dto) {
         Genre genre = genreMapper.map(dto);
         return genreRepository.save(genre);
+    }
+
+    public Set<Genre> findAllById(Iterable<Integer> ids) {
+        return new HashSet<>(genreRepository.findAllById(ids));
     }
 
     public void deleteGenre(Integer id) {
