@@ -14,6 +14,7 @@ public interface MovieMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "genres", ignore = true)
+    @Mapping(target = "video", ignore = true)
     Movie map(CreateMovieDto dto);
 
     void update(Movie source, @MappingTarget Movie target);

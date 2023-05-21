@@ -45,8 +45,7 @@ public class MoviesController {
 
     @PostMapping
     public MovieDto createMovie(@RequestBody CreateMovieDto dto) {
-        Movie movie = movieMapper.map(dto);
-        Movie entity = moviesService.createMovie(movie, dto.getGenreIds());
+        Movie entity = moviesService.createMovie(dto);
         return movieMapper.map(entity);
     }
 
@@ -57,8 +56,7 @@ public class MoviesController {
 
     @PutMapping("{id}")
     public MovieDto updateMovie(@PathVariable Integer id, @RequestBody CreateMovieDto dto) {
-        Movie movie = movieMapper.map(dto);
-        Movie entity = moviesService.updateMovie(id, movie);
+        Movie entity = moviesService.updateMovie(id, dto);
         return movieMapper.map(entity);
     }
 }

@@ -1,6 +1,13 @@
 package com.videolibrary.backend.infrastructure.sql.initializer;
 
-import com.videolibrary.backend.domain.entity.*;
+import com.videolibrary.backend.domain.entity.Episode;
+import com.videolibrary.backend.domain.entity.FileResource;
+import com.videolibrary.backend.domain.entity.Genre;
+import com.videolibrary.backend.domain.entity.Movie;
+import com.videolibrary.backend.domain.entity.Season;
+import com.videolibrary.backend.domain.entity.Series;
+import com.videolibrary.backend.domain.entity.Video;
+import com.videolibrary.backend.infrastructure.sql.repository.FileResourceRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.MovieRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import jakarta.annotation.PostConstruct;
@@ -11,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @ConditionalOnProperty(value = "videolibrary.database.init", havingValue = "true")
 @Component
@@ -18,6 +26,7 @@ import java.util.Set;
 public class DataInitializer {
     private final MovieRepository movieRepository;
     private final SeriesRepository seriesRepository;
+    private final FileResourceRepository fileResourceRepository;
 
     private static Genre getMovieGenre() {
         Genre movieGenre = new Genre();
@@ -37,7 +46,7 @@ public class DataInitializer {
         series.setTitle("seriesTitle");
         series.setSeasons(List.of(getSeason()));
         series.setGenres(Set.of(getSeriesGenre()));
-        series.setLastEpisodeReleaseDate(LocalDate.parse("2023-05-07"));
+        series.setThumbnail(getRandomResource());
         return series;
     }
 
@@ -64,7 +73,6 @@ public class DataInitializer {
         episode.setDescription("episodeDescription");
         episode.setName("episodeName");
         episode.setReleaseDate(LocalDate.parse("2023-05-07"));
-        episode.setNumberInSeason(1);
         episode.setVideo(getEpisodeVideo());
         return episode;
     }
@@ -77,15 +85,27 @@ public class DataInitializer {
 
     private Video getEpisodeVideo() {
         Video episodeVideo = new Video();
-        episodeVideo.setThumbnailPathId("episodeVideoThumbnailPathId");
-        episodeVideo.setPathId("episodeVideoPathId");
+        episodeVideo.setContent(getRandomResource());
+        episodeVideo.setThumbnail(getRandomResource());
         return episodeVideo;
     }
 
     private Video getMovieVideo() {
         Video movieVideo = new Video();
-        movieVideo.setPathId("2760d44c-da56-4c3b-84f5-3844049aa062");
-        movieVideo.setThumbnailPathId("e1e5f5ec-c168-4f26-ab43-95d087704d22");
+        movieVideo.setContent(getFileResource(UUID.fromString("e1e5f5ec-c168-4f26-ab43-95d087704d22")));
+        movieVideo.setThumbnail(getFileResource(UUID.fromString("2760d44c-da56-4c3b-84f5-3844049aa062")));
         return movieVideo;
+    }
+
+    private FileResource getRandomResource() {
+        FileResource resource = new FileResource();
+        resource.setId(UUID.randomUUID());
+        return fileResourceRepository.save(resource);
+    }
+
+    public FileResource getFileResource(UUID id) {
+        FileResource resource = new FileResource();
+        resource.setId(id);
+        return fileResourceRepository.save(resource);
     }
 }

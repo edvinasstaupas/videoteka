@@ -1,10 +1,18 @@
 package com.videolibrary.backend.domain.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -31,9 +39,8 @@ public class Series {
 
     private String description;
 
-    private String thumbnailPathId;
-
-    private LocalDate lastEpisodeReleaseDate;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private FileResource thumbnail;
 
     public void setSeasons(List<Season> seasons) {
         seasons.forEach(season -> season.setSeries(this));

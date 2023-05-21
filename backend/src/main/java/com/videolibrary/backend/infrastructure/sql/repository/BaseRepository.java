@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface BaseRepository<T> extends JpaRepository<T, Integer> {
+public interface BaseRepository<T, ID> extends JpaRepository<T, ID> {
 
-    default T findByIdOrThrow(Integer id) {
+    default T findByIdOrThrow(ID id) {
         return findById(id).orElseThrow(() -> new DomainEntityNotFoundException("Entity with id " + id + " not found"));
     }
 }

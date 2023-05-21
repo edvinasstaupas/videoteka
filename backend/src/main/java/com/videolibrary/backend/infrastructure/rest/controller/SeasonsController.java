@@ -35,15 +35,13 @@ public class SeasonsController {
 
     @PatchMapping("{id}")
     public SeasonDto updateSeason(@PathVariable Integer id, @RequestBody CreateSeasonDto dto) {
-        Season seasons = seasonMapper.map(dto);
-        Season entity = seasonService.updateSeason(id, seasons);
+        Season entity = seasonService.updateSeason(id, dto);
         return seasonMapper.map(entity);
     }
 
     @PostMapping("{seasonId}/episodes")
     public EpisodeDto createEpisode(@PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
-        Episode episode = episodeMapper.map(dto);
-        Episode entity = episodeService.createEpisode(seasonId, episode);
+        Episode entity = episodeService.createEpisode(seasonId, dto);
         return episodeMapper.map(entity);
     }
 }

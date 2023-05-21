@@ -11,6 +11,5 @@ public class EpisodeDto {
     private VideoDto video;
     private String name;
     private String description;
-    private Integer numberInSeason;
     private LocalDate releaseDate;
 }

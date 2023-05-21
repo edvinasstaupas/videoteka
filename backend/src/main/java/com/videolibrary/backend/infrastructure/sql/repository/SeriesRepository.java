@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SeriesRepository extends BaseRepository<Series>, JpaSpecificationExecutor<Series> {
+public interface SeriesRepository extends BaseRepository<Series, Integer>, JpaSpecificationExecutor<Series> {
 }

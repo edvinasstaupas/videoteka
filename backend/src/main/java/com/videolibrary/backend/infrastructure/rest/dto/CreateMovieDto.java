@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class CreateMovieDto {
 
-    private List<Integer> genreIds = List.of();
+    private List<Integer> genreIds;
     private CreateVideoDto video;
     private String title;
     private String description;

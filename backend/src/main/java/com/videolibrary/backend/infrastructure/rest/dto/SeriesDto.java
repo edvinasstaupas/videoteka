@@ -3,7 +3,6 @@ package com.videolibrary.backend.infrastructure.rest.dto;
 
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +14,5 @@ public class SeriesDto {
     private Set<GenreDto> genres;
     private String title;
     private String description;
-    private String thumbnailPathId;
-    private LocalDate lastEpisodeReleaseDate;
-
+    private String thumbnailId;
 }

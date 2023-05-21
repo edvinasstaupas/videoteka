@@ -27,8 +27,7 @@ public class EpisodesController {
 
     @PatchMapping("{id}")
     public EpisodeDto updateEpisode(@PathVariable Integer id, @RequestBody CreateEpisodeDto dto) {
-        Episode episode = episodeMapper.map(dto);
-        Episode entity = episodeService.updateEpisode(id, episode);
+        Episode entity = episodeService.updateEpisode(id, dto);
         return episodeMapper.map(entity);
     }
 
