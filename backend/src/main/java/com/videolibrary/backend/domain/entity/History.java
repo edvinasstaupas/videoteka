@@ -19,10 +19,7 @@ public class History {
     private User user;
 
     @ManyToOne
-    private Movie movie;
-
-    @ManyToOne
-    private Episode episode;
+    private HistoryAware historyAware;
 
     private ZonedDateTime timestamp;
 

@@ -10,11 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class Movie {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Movie extends HistoryAware {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -23,13 +19,5 @@ public class Movie {
     )
     private Set<Genre> genres;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Video video;
-
-    private String title;
-
-    private String description;
-
     private LocalDate releaseDate;
-
 }

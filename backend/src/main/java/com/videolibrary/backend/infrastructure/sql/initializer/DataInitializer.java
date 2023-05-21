@@ -71,7 +71,7 @@ public class DataInitializer {
     private Episode getEpisode() {
         Episode episode = new Episode();
         episode.setDescription("episodeDescription");
-        episode.setName("episodeName");
+        episode.setTitle("episodeTitle");
         episode.setReleaseDate(LocalDate.parse("2023-05-07"));
         episode.setVideo(getEpisodeVideo());
         return episode;

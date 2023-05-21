@@ -1,6 +1,5 @@
 package com.videolibrary.backend.configuration;
 
-import com.videolibrary.backend.infrastructure.sql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
