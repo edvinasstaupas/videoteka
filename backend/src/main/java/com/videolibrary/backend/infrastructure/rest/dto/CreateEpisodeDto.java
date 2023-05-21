@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class CreateEpisodeDto {
 
     private CreateVideoDto video;
-    private String name;
+    private String title;
     private String description;
     private LocalDate releaseDate;
 }

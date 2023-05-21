@@ -1,30 +1,26 @@
 package com.videolibrary.backend.domain.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
+import static com.videolibrary.backend.domain.entity.HistoryAware.Type.EPISODE;
+
 @Entity
 @Getter
 @Setter
-public class Episode {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Video video;
+public class Episode extends HistoryAware {
 
     @ManyToOne
     private Season season;
 
-    private String name;
-
-    private String description;
-
     private LocalDate releaseDate;
 
+    @Override
+    public HistoryAware.Type getType() {
+        return EPISODE;
+    }
 }
