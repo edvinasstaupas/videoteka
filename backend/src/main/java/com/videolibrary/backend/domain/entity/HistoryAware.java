@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
-public class HistoryAware {
+public abstract class HistoryAware {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +26,11 @@ public class HistoryAware {
     private String title;
 
     private String description;
+
+    public abstract Type getType();
+
+    public enum Type {
+        EPISODE,
+        MOVIE
+    }
 }

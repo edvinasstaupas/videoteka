@@ -5,9 +5,9 @@ import com.videolibrary.backend.infrastructure.rest.dto.HistoryDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(config = DefaultMapperConfig.class)
+@Mapper(config = DefaultMapperConfig.class, uses = VideoMapper.class)
 public interface HistoryMapper {
 
-    @Mapping(source = "video.id", target = "videoId")
+    @Mapping(source = "id", target = "targetId")
     HistoryDto map(HistoryAware entity);
 }
