@@ -30,6 +30,7 @@ backend/build/
 
 **/.idea/
 **/.vscode/
+logs
 
 gradlew
 gradlew.bat
