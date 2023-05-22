@@ -2,11 +2,12 @@ package com.videolibrary.backend.infrastructure.rest.advice;
 
 import com.videolibrary.backend.domain.exception.DomainEntityNotFoundException;
 import com.videolibrary.backend.infrastructure.rest.dto.ErrorResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,20 +28,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RequiredArgsConstructor
 public class RestExceptionHandler {
 
-    private final HttpServletRequest request;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
 
     private ResponseEntity<ErrorResponse> toResponse(Exception exception, HttpStatus status) {
         return toResponse(exception, status, exception.getMessage());
     }
 
-    private ResponseEntity<ErrorResponse> toResponse(Exception exception, HttpStatus status, String message) {
-        ErrorResponse entity = new ErrorResponse();
-        entity.setException(exception.getClass().getSimpleName());
-        entity.setMessage(message);
-        return new ResponseEntity<>(entity, status);
-    }
-
     // 400 bad request
+
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleInvalidObjects(Exception exception) {
@@ -52,8 +47,8 @@ public class RestExceptionHandler {
         }).toList());
         return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
-
     // 400 bad request
+
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(Exception exception) {
@@ -61,26 +56,33 @@ public class RestExceptionHandler {
         var message = String.join("\n", ex.getConstraintViolations().stream().map(ConstraintViolation::getMessageTemplate).toList());
         return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
-
     // 400 bad request
+
     @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class, HttpRequestMethodNotSupportedException.class, MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleBadRequest(Exception e) {
         return toResponse(e, HttpStatus.BAD_REQUEST);
     }
-
     // 404 not found
+
     @ExceptionHandler({NoHandlerFoundException.class, DomainEntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFound(Exception e) {
         return toResponse(e, HttpStatus.NOT_FOUND);
     }
-
     // 500 internal server error
+
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponse> handleDefaultExceptions(Exception e) {
         return toResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    private ResponseEntity<ErrorResponse> toResponse(Exception exception, HttpStatus status, String message) {
+        ErrorResponse entity = new ErrorResponse();
+        entity.setException(exception.getClass().getSimpleName());
+        entity.setMessage(message);
+        LOGGER.error("Exception during processing", exception);
+        return new ResponseEntity<>(entity, status);
+    }
 }
