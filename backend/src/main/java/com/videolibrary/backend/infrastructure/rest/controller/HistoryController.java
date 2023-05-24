@@ -8,7 +8,6 @@ import com.videolibrary.backend.infrastructure.service.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +27,7 @@ public class HistoryController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        PageRequest request = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
+        PageRequest request = PageRequest.of(page, size);
         Page<History> history = historyService.getHistory(request);
         return history.map(History::getHistoryAware).map(historyMapper::map);
     }

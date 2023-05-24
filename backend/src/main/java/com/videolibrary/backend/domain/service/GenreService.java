@@ -18,8 +18,10 @@ public class GenreService {
     private final GenreRepository genreRepository;
     private final GenreMapper genreMapper;
 
-    public Page<Genre> getGenres(PageRequest request) {
-        return genreRepository.findAll(request);
+    public Page<Genre> getGenres(String name, PageRequest request) {
+        return name != null ?
+            genreRepository.findAllByNameStartingWith(name, request) :
+            genreRepository.findAll(request);
     }
 
     public Genre createGenre(CreateGenreDto dto) {

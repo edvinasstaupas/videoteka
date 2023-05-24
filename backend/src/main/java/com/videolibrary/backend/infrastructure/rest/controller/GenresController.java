@@ -27,11 +27,13 @@ public class GenresController {
     private final GenreMapper genreMapper;
 
     @GetMapping
-    public Page<GenreDto> getGenres(
+    public Page<GenreDto> searchGenres(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String name
+    ) {
         PageRequest request = PageRequest.of(page, size, Sort.by("name"));
-        return genreService.getGenres(request).map(genreMapper::map);
+        return genreService.getGenres(name, request).map(genreMapper::map);
     }
 
     @PostMapping

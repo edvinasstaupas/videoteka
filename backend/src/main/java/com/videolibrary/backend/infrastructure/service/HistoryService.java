@@ -22,7 +22,7 @@ public class HistoryService {
     private final Clock clock;
 
     public Page<History> getHistory(PageRequest request) {
-        return historyRepository.findAll(request);
+        return historyRepository.findHistoryForUser(userService.getUser().getId(), request);
     }
 
     public History createHistory(CreateHistoryDto dto) {
