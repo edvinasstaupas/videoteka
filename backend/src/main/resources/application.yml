@@ -38,4 +38,3 @@ server:
 
 logging.interceptor.enabled: true
 persist-exceptions: false
-traceable-exception-size: 255B
