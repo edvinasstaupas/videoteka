@@ -6,8 +6,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +26,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RequiredArgsConstructor
 public class RestExceptionHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
+    private final ErrorResponseCallback errorCallback;
 
     private ResponseEntity<ErrorResponse> toResponse(Exception exception, HttpStatus status) {
         return toResponse(exception, status, exception.getMessage());
@@ -82,7 +80,7 @@ public class RestExceptionHandler {
         ErrorResponse entity = new ErrorResponse();
         entity.setException(exception.getClass().getSimpleName());
         entity.setMessage(message);
-        LOGGER.error("Exception during processing", exception);
+        errorCallback.accept(exception, status);
         return new ResponseEntity<>(entity, status);
     }
 }
