@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { moviesLoader } from "./loaders/moviesLoader.js";
+import { BrowseMovies } from "./pages/BrowseMovies.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +37,8 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'movies',
-            element: <div>Movies</div>,
+            loader: moviesLoader,
+            element: <BrowseMovies />,
           },
           {
             path: 'series',

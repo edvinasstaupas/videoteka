@@ -8,7 +8,6 @@ export function setAccessTokenGetter(getter) {
 
 export const api = ky.create({
   prefixUrl: 'http://localhost:8080/api',
-  retry: 0,
   hooks: {
     beforeRequest: [
         async request => {
