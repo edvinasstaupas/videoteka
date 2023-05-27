@@ -19,7 +19,7 @@ public class ExceptionCallbackConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionCallbackConfiguration.class);
 
     @Bean
-    @ConditionalOnProperty(value = "persist-exceptions", havingValue = "false", matchIfMissing = true)
+    @ConditionalOnProperty(value = "logging.persist-exceptions", havingValue = "false", matchIfMissing = true)
     public ErrorResponseCallback logExceptionCallback() {
         return (exception, status) -> {
             String stackTrace = ExceptionUtils.getStackTrace(exception);
@@ -28,7 +28,7 @@ public class ExceptionCallbackConfiguration {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "persist-exceptions", havingValue = "true")
+    @ConditionalOnProperty(value = "logging.persist-exceptions", havingValue = "true")
     public ErrorResponseCallback persistExceptionCallback(ErrorRepository repository, UserService userService, Clock clock) {
         return (exception, status) -> {
             Error error = new Error();
