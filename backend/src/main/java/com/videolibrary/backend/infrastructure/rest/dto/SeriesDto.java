@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 public class SeriesDto {
-
+    private Integer version;
     private Integer id;
     private List<SeasonDto> seasons;
     private Set<GenreDto> genres;

@@ -56,8 +56,9 @@ public class SeriesController {
     }
 
     @PatchMapping("{id}")
-    public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto) {
-        Series entity = seriesService.updateSeries(id, dto);
+    public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto,
+            @RequestParam(required = false) Integer version) {
+        Series entity = seriesService.updateSeries(id, dto, version);
         return seriesMapper.map(entity);
     }
 
