@@ -34,6 +34,10 @@ public class FileResourceService {
         }
     }
 
+    public FileResource getFileResource(UUID id) {
+        return fileRepository.findByIdOrThrow(id);
+    }
+
     public Resource loadAsResource(UUID id) {
         FileResource resource = fileRepository.findByIdOrThrow(id);
         Path resourcePath = properties.getRootStoragePath().resolve(resource.getId().toString());

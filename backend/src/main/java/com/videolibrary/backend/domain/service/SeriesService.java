@@ -3,7 +3,7 @@ package com.videolibrary.backend.domain.service;
 import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.infrastructure.rest.convert.SeriesMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeriesDto;
-import com.videolibrary.backend.infrastructure.sql.repository.FileResourceRepository;
+import com.videolibrary.backend.infrastructure.service.FileResourceService;
 import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class SeriesService {
     private final SeriesRepository seriesRepository;
     private final GenreService genreService;
     private final SeriesMapper seriesMapper;
-    private final FileResourceRepository fileRepository;
+    private final FileResourceService fileResourceService;
 
     public Page<Series> getSeries(PageRequest request, Specification<Series> specification) {
         return seriesRepository.findAll(specification, request);
@@ -35,7 +35,7 @@ public class SeriesService {
     public Series createSeries(CreateSeriesDto dto) {
         Series series = seriesMapper.map(dto);
         series.setGenres(genreService.findAllById(dto.getGenreIds()));
-        series.setThumbnail(fileRepository.findByIdOrThrow(dto.getThumbnailId()));
+        series.setThumbnail(fileResourceService.getFileResource(dto.getThumbnailId()));
         return seriesRepository.save(series);
     }
 
