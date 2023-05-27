@@ -6,8 +6,10 @@ import com.videolibrary.backend.infrastructure.sql.repository.FileResourceReposi
 import com.videolibrary.backend.infrastructure.sql.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class VideoService {
     private final VideoRepository videoRepository;

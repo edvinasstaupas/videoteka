@@ -7,8 +7,10 @@ import com.videolibrary.backend.infrastructure.sql.repository.EpisodeRepository;
 import com.videolibrary.backend.infrastructure.sql.repository.SeasonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class EpisodeService {
     private final SeasonRepository seasonRepository;
