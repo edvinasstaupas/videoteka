@@ -11,6 +11,7 @@ import com.videolibrary.backend.infrastructure.rest.dto.CreateSeasonDto;
 import com.videolibrary.backend.infrastructure.rest.dto.EpisodeDto;
 import com.videolibrary.backend.infrastructure.rest.dto.SeasonDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,17 +30,20 @@ public class SeasonsController {
     private final EpisodeService episodeService;
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public void deleteSeason(@PathVariable Integer id) {
         seasonService.deleteSeason(id);
     }
 
     @PatchMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public SeasonDto updateSeason(@PathVariable Integer id, @RequestBody CreateSeasonDto dto) {
         Season entity = seasonService.updateSeason(id, dto);
         return seasonMapper.map(entity);
     }
 
     @PostMapping("{seasonId}/episodes")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public EpisodeDto createEpisode(@PathVariable Integer seasonId, @RequestBody CreateEpisodeDto dto) {
         Episode entity = episodeService.createEpisode(seasonId, dto);
         return episodeMapper.map(entity);

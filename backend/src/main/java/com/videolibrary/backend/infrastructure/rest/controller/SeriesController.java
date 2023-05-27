@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -50,12 +51,14 @@ public class SeriesController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public SeriesDto createSeries(@RequestBody CreateSeriesDto dto) {
         Series entity = seriesService.createSeries(dto);
         return seriesMapper.map(entity);
     }
 
     @PatchMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public SeriesDto updateSeries(@PathVariable Integer id, @RequestBody CreateSeriesDto dto,
             @RequestParam(required = false) Integer version) {
         Series entity = seriesService.updateSeries(id, dto, version);
@@ -63,12 +66,14 @@ public class SeriesController {
     }
 
     @PostMapping("/{seriesId}/seasons")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public SeasonDto createSeason(@PathVariable Integer seriesId, @RequestBody CreateSeasonDto dto) {
         Season entity = seasonService.createSeason(seriesId, dto);
         return seasonMapper.map(entity);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public void deleteSeries(@PathVariable Integer id) {
         seriesService.deleteSeries(id);
     }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,17 +45,20 @@ public class MoviesController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public MovieDto createMovie(@RequestBody CreateMovieDto dto) {
         Movie entity = moviesService.createMovie(dto);
         return movieMapper.map(entity);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public void deleteMovie(@PathVariable Integer id) {
         moviesService.deleteMovie(id);
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAuthority('SCOPE_admin')")
     public MovieDto updateMovie(@PathVariable Integer id, @RequestBody CreateMovieDto dto) {
         Movie entity = moviesService.updateMovie(id, dto);
         return movieMapper.map(entity);
