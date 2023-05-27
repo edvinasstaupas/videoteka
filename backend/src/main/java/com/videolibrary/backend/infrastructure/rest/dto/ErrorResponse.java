@@ -12,5 +12,7 @@ import lombok.Setter;
 public class ErrorResponse {
 
     private String exception;
+
     private String message;
+
 }

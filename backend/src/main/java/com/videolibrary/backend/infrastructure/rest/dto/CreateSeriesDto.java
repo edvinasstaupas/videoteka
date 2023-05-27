@@ -9,7 +9,11 @@ import java.util.UUID;
 public class CreateSeriesDto {
 
     private List<Integer> genreIds;
+
     private String title;
+
     private String description;
+
     private UUID thumbnailId;
+
 }

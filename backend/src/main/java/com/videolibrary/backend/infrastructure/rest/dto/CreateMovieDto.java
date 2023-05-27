@@ -9,9 +9,13 @@ import java.util.List;
 public class CreateMovieDto {
 
     private List<Integer> genreIds;
+
     private CreateVideoDto video;
+
     private String title;
+
     private String description;
+
     private LocalDate releaseDate;
 
 }

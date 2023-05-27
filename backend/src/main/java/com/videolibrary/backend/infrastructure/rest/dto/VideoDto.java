@@ -8,7 +8,9 @@ import java.util.UUID;
 public class VideoDto {
 
     private Integer id;
+
     private UUID thumbnailId;
+
     private UUID contentId;
 
 }
