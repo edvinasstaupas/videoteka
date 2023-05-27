@@ -6,5 +6,7 @@ import lombok.Data;
 public class CreateSeasonDto {
 
     private String title;
+
     private String description;
+
 }

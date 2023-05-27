@@ -9,10 +9,15 @@ import java.util.Set;
 public class MovieDto {
 
     private Integer id;
+
     private Set<GenreDto> genres;
+
     private VideoDto video;
+
     private String title;
+
     private String description;
+
     private LocalDate releaseDate;
 
 }

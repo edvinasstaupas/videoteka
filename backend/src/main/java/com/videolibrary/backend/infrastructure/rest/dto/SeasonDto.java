@@ -8,8 +8,11 @@ import java.util.List;
 public class SeasonDto {
 
     private Integer id;
+
     private String title;
+
     private String description;
+
     private List<EpisodeDto> episodes;
 
 }

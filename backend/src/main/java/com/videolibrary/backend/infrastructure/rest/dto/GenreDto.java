@@ -6,6 +6,7 @@ import lombok.Data;
 public class GenreDto {
 
     private Integer id;
+
     private String name;
 
 }
