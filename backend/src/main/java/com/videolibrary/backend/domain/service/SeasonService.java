@@ -35,4 +35,8 @@ public class SeasonService {
         seasonMapper.update(season, existingSeason);
         return seasonRepository.save(existingSeason);
     }
+
+    public Season getSeason(Integer id) {
+        return seasonRepository.findByIdOrThrow(id);
+    }
 }

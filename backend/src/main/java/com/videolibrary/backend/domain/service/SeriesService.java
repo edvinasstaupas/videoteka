@@ -28,6 +28,10 @@ public class SeriesService {
         return seriesRepository.findAll(specification, request);
     }
 
+    public Series getSeries(Integer id) {
+        return seriesRepository.findByIdOrThrow(id);
+    }
+
     public Series createSeries(CreateSeriesDto dto) {
         Series series = seriesMapper.map(dto);
         series.setGenres(genreService.findAllById(dto.getGenreIds()));

@@ -45,4 +45,8 @@ public class GenreService {
         genreMapper.update(genre, existingGenre);
         return genreRepository.save(existingGenre);
     }
+
+    public Genre getGenre(Integer id) {
+        return genreRepository.findByIdOrThrow(id);
+    }
 }

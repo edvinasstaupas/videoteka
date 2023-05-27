@@ -36,4 +36,7 @@ public class EpisodeService {
         return episodeRepository.save(existingEpisode);
     }
 
+    public Episode getEpisode(Integer id) {
+        return episodeRepository.findByIdOrThrow(id);
+    }
 }
