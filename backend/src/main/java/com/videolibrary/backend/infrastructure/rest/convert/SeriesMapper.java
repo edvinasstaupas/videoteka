@@ -13,6 +13,7 @@ public interface SeriesMapper {
     @Mapping(source = "thumbnail.id", target = "thumbnailId")
     SeriesDto map(Series series);
 
+    @Mapping(target = "version", ignore = true)
     @Mapping(target = "seasons", ignore = true)
     @Mapping(target = "genres", ignore = true)
     @Mapping(target = "thumbnail", ignore = true)

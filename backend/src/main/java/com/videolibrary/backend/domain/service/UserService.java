@@ -6,8 +6,10 @@ import com.videolibrary.backend.infrastructure.rest.dto.CreateUpdateUserDto;
 import com.videolibrary.backend.infrastructure.sql.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
     private final AuthService authService;

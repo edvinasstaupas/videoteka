@@ -10,10 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SeriesService {
 
@@ -37,15 +39,25 @@ public class SeriesService {
         seriesRepository.deleteById(id);
     }
 
-    public Series updateSeries(Integer id, CreateSeriesDto dto) {
-        Series existingSeries = seriesRepository.findByIdOrThrow(id);
-        Series series = seriesMapper.map(dto);
-        List<Integer> genreIds = dto.getGenreIds();
-        if (genreIds != null)
-            series.setGenres(genreService.findAllById(genreIds));
-
-        seriesMapper.update(series, existingSeries);
-        return seriesRepository.save(existingSeries);
+    public Series updateSeries(Integer id, CreateSeriesDto dto, Integer version) {
+        Series series = new Series();
+        seriesMapper.update(seriesRepository.findByIdOrThrow(id), series);
+        seriesMapper.update(mapSeriesFromDto(dto), series);
+        if (!isForce(version)) {
+            series.setVersion(version);
+        }
+        return seriesRepository.save(series);
     }
 
+    private Series mapSeriesFromDto(CreateSeriesDto dto) {
+        Series dtoSeries = seriesMapper.map(dto);
+        List<Integer> genreIds = dto.getGenreIds();
+        if (genreIds != null)
+            dtoSeries.setGenres(genreService.findAllById(genreIds));
+        return dtoSeries;
+    }
+
+    private boolean isForce(Integer version) {
+        return version == null;
+    }
 }

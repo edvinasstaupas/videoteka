@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class FileResourceService {
     private final StorageProperties properties;

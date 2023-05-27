@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class GenreService {
     private final GenreRepository genreRepository;
