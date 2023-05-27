@@ -13,6 +13,7 @@ import com.videolibrary.backend.infrastructure.rest.dto.SeasonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,12 @@ public class SeasonsController {
     private final SeasonMapper seasonMapper;
     private final EpisodeMapper episodeMapper;
     private final EpisodeService episodeService;
+
+    @GetMapping("{id}")
+    public SeasonDto getSeason(@PathVariable Integer id) {
+        Season season = seasonService.getSeason(id);
+        return seasonMapper.map(season);
+    }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('SCOPE_admin')")

@@ -37,6 +37,12 @@ public class GenresController {
         return genreService.getGenres(name, request).map(genreMapper::map);
     }
 
+    @GetMapping("{id}")
+    public GenreDto getGenre(@PathVariable Integer id) {
+        Genre genre = genreService.getGenre(id);
+        return genreMapper.map(genre);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public GenreDto createGenre(@RequestBody CreateGenreDto dto) {

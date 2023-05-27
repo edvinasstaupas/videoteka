@@ -47,4 +47,8 @@ public class MovieService {
     public void deleteMovie(Integer id) {
         movieRepository.deleteById(id);
     }
+
+    public Movie getMovie(Integer id) {
+        return movieRepository.findByIdOrThrow(id);
+    }
 }

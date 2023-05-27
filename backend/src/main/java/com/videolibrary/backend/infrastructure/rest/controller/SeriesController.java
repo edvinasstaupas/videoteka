@@ -50,6 +50,12 @@ public class SeriesController {
         return seriesService.getSeries(request, specification).map(seriesMapper::map);
     }
 
+    @GetMapping("{id}")
+    public SeriesDto getSeries(@PathVariable Integer id) {
+        Series series = seriesService.getSeries(id);
+        return seriesMapper.map(series);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public SeriesDto createSeries(@RequestBody CreateSeriesDto dto) {

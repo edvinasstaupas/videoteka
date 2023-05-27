@@ -5,7 +5,6 @@ import com.videolibrary.backend.domain.entity.Series;
 import com.videolibrary.backend.infrastructure.rest.convert.SeasonMapper;
 import com.videolibrary.backend.infrastructure.rest.dto.CreateSeasonDto;
 import com.videolibrary.backend.infrastructure.sql.repository.SeasonRepository;
-import com.videolibrary.backend.infrastructure.sql.repository.SeriesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class SeasonService {
-    private final SeriesRepository seriesRepository;
+    private final SeriesService seriesService;
     private final SeasonRepository seasonRepository;
     private final SeasonMapper seasonMapper;
 
     public Season createSeason(Integer seriesId, CreateSeasonDto dto) {
-        Series series = seriesRepository.findByIdOrThrow(seriesId);
+        Series series = seriesService.getSeries(seriesId);
         Season season = seasonMapper.map(dto);
         season.setSeries(series);
         return seasonRepository.save(season);
@@ -34,5 +33,9 @@ public class SeasonService {
         Season season = seasonMapper.map(dto);
         seasonMapper.update(season, existingSeason);
         return seasonRepository.save(existingSeason);
+    }
+
+    public Season getSeason(Integer id) {
+        return seasonRepository.findByIdOrThrow(id);
     }
 }

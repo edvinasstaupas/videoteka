@@ -44,6 +44,12 @@ public class MoviesController {
         return moviesService.getMovies(request, specification).map(movieMapper::map);
     }
 
+    @GetMapping("{id}")
+    public MovieDto getMovie(@PathVariable Integer id) {
+        Movie movie = moviesService.getMovie(id);
+        return movieMapper.map(movie);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_admin')")
     public MovieDto createMovie(@RequestBody CreateMovieDto dto) {
