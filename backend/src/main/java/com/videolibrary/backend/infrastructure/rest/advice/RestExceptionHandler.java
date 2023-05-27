@@ -69,14 +69,15 @@ public class RestExceptionHandler {
     public ResponseEntity<ErrorResponse> handleNotFound(Exception e) {
         return toResponse(e, HttpStatus.NOT_FOUND);
     }
-    // 500 internal server error
 
+    // 409 conflict
     @ExceptionHandler({ObjectOptimisticLockingFailureException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleOptimisticLocking(Exception e) {
         return toResponse(e, HttpStatus.CONFLICT);
     }
 
+    // 500 internal server error
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponse> handleDefaultExceptions(Exception e) {
