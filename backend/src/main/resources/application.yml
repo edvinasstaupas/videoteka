@@ -35,6 +35,7 @@ server:
   servlet:
     context-path: /api
   port: 8080
-
-logging.interceptor.enabled: true
-persist-exceptions: false
+logging:
+  interceptor:
+    enabled: true
+  persist-exceptions: false

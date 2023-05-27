@@ -8,4 +8,15 @@ public class AuthService {
     public String getCurrentUserId() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
+
+    public String getCurrentUserRole() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("SCOPE_admin"))
+                ? "admin"
+                : "user";
+    }
 }
