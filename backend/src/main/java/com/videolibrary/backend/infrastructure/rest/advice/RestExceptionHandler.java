@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +35,6 @@ public class RestExceptionHandler {
     }
 
     // 400 bad request
-
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleInvalidObjects(Exception exception) {
@@ -46,8 +46,8 @@ public class RestExceptionHandler {
         }).toList());
         return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
-    // 400 bad request
 
+    // 400 bad request
     @ExceptionHandler({ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleConstraintViolation(Exception exception) {
@@ -55,15 +55,22 @@ public class RestExceptionHandler {
         var message = String.join("\n", ex.getConstraintViolations().stream().map(ConstraintViolation::getMessageTemplate).toList());
         return toResponse(exception, HttpStatus.BAD_REQUEST, message);
     }
-    // 400 bad request
 
+    // 400 bad request
     @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class, HttpRequestMethodNotSupportedException.class, MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleBadRequest(Exception e) {
         return toResponse(e, HttpStatus.BAD_REQUEST);
     }
-    // 404 not found
 
+    // 403 forbidden
+    @ExceptionHandler({AccessDeniedException.class})
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(Exception e) {
+        return toResponse(e, HttpStatus.FORBIDDEN);
+    }
+
+    // 404 not found
     @ExceptionHandler({NoHandlerFoundException.class, DomainEntityNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleNotFound(Exception e) {
