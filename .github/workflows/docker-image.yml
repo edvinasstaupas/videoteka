@@ -32,7 +32,7 @@ jobs:
     - name: Create and push file
       run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "Image push"
           git add ./images/psk_backend_latest.tar
           git commit -m "Update backend image"
-          git push
+          git push origin ${{ github.ref }}
