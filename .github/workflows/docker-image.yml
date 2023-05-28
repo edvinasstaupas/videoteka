@@ -27,7 +27,7 @@ jobs:
       run: sh ./build/backend/build.sh
 
     - name: Build the Docker image
-      run: ls ./images
+      run: ls
       
 #     - name: Create and push file
 #       run: |
