@@ -29,10 +29,15 @@ jobs:
     - name: Build the Docker image
       run: ls
       
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+      
     - name: Create and push file
       run: |
           git config --local user.email "action@github.com"
           git config --local user.name "Image push"
           git add ./images/psk_backend_latest.tar
           git commit -m "Update backend image"
-          git push origin ${{ github.ref }}
+          git push origin ${{ steps.extract_branch.outputs.branch }}
