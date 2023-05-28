@@ -14,5 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Navigate to builds
+      run: cd build/backend
+      
     - name: Build the Docker image
-      run: docker build . --file build/backend/Dockerfile --tag my-image-name:latest --output build/images/backend
+      run: sh build.sh
