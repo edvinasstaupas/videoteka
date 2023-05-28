@@ -18,12 +18,10 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
 
-#     - name: Navigate to builds
-#       run: ls
-#     - name: Navigate to builds
-#       run: cd ./build/backend
-#     - name: Navigate to builds
-#       run: ls
+    - name: Navigate to builds
+      run: file --name build.sh
+    - name: Navigate to builds
+      run: ls /build/backend
       
     - name: Build the Docker image
       run: sh /build/backend/build.sh
