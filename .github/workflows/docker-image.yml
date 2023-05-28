@@ -19,7 +19,9 @@ jobs:
       uses: gradle/gradle-build-action@v2
 
     - name: Navigate to builds
-      run: file --name build.sh
+      run: find . -name build.sh
+    - name: Navigate to builds
+      run: file /build/backend/build.sh
     - name: Navigate to builds
       run: ls /build/backend
       
