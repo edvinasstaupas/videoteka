@@ -28,6 +28,8 @@ jobs:
 
     - name: Build the Docker image
       run: ls
+    - name: Build the Docker image
+      run: git branch --show-current
       
     - name: Extract branch name
       shell: bash
