@@ -26,11 +26,17 @@ jobs:
     - name: Build the Docker image
       run: sh ./build/backend/build.sh
       
+    - name: Extract branch name	    
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+      
+    - name: Publish the Docker image
     - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit -m "generated"
-          git push
-
+          git push origin HEAD:${{ steps.extract_branch.outputs.branch }}
+          
     - run: ls ./images
