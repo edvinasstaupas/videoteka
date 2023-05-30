@@ -36,10 +36,11 @@ jobs:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
       run: |
           date > ./images/generated.txt
+          git remote add origin_with_token https://${{ secrets.PAT_TOKEN }}@github.com/edvinasstaupas/videoteka.git
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit -m "generated"
-          git push origin HEAD:${{ steps.extract_branch.outputs.branch }}
+          git push origin_with_token HEAD:${{ steps.extract_branch.outputs.branch }}
           
     - run: ls ./images
