@@ -31,15 +31,12 @@ jobs:
       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       id: extract_branch
       
-    - name: Publish the Docker image
-      # Only run on main branch push (e.g. after pull request merge).
-      if: github.event_name != 'push'
-      run: |
-        echo "${{ env.CI_COMMIT_AUTHOR }}"
-        git config --global user.name "Docker image publisher"
-        git config --global user.email "username@users.noreply.github.com"
-        git add .
-        git commit -a -m "updating docker image"
-        git push
+    - run: |
+          date > ./images/generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
           
     - run: ls ./images
