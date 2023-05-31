@@ -1,8 +1,9 @@
 version: '3'
-
+name: videoteka_be
 services:
   db:
     image: mariadb
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: videolibrary
@@ -16,7 +17,8 @@ services:
       retries: 15
 
   backend:
-    image: psk/backend:1.0
+    image: gustaszilinskas653/psk:backend
+    container_name: backend
     environment:
       storage.rootStoragePath: /var/lib/uploads
       videolibrary.database.host: db
