@@ -1,6 +1,7 @@
 package com.videolibrary.backend.domain.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +42,7 @@ public class Series {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(cascade = CascadeType.REMOVE)
